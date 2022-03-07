@@ -3,8 +3,8 @@ This repository contains the code for the Flutter App of the Nagibyte team solut
 A code for the Arduino part available in [NTOSmartCityArduino](https://github.com/vadim-rm/NTOSmartCityArduino) repository
 
 This solution was created by our team (a union of the teams "Nagibators" and "Ebyte"):
-  * [Vadim Mazhitov](https://github.com/vadim-rm) (Nagibators, Web & Arduino Expert)
-  * [Daniil Kikimov](https://github.com/katsushooter) (Nagibators, Web Expert)
+  * [Vadim Mazhitov](https://github.com/vadim-rm) (Nagibators, Flutter & Arduino Expert)
+  * [Daniil Kikimov](https://github.com/katsushooter) (Nagibators, Flutter Expert)
   * [Alexander Petrov](https://github.com/Leto-Osen228) (Ebyte, Arduino & Schematics Expert)
   * [Nikita Syshchikov](https://github.com/furperson) (Ebyte, Arduino & Schematics Expert)
   * [Andrey Karabanov](https://github.com/forafox) (Ebyte, Arduino & Schematics Expert)
