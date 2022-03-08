@@ -66,6 +66,8 @@ class User {
     return "__";
   }
 
+  String get fullNameWithMiddle => "$surname $name $middleName";
+
   @override
   operator ==(other) =>
       other is User && other.name == name && other.surname == surname;

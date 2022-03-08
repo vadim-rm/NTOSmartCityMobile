@@ -11,6 +11,7 @@ import 'package:nagib_pay/bloc/user_edit/user_edit_state.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 import 'package:nagib_pay/widgets/rounded_button.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class UserEditView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -70,7 +71,9 @@ class UserEditView extends StatelessWidget {
             runSpacing: 24,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              _avatarPreview(),
+              if (!kIsWeb) ...[
+                _avatarPreview(),
+              ],
               _nameField(),
               _surnameField(),
               _middleNameField(),

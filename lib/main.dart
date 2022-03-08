@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/app_navigator.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
 import 'package:nagib_pay/firebase_options.dart';
+import 'package:nagib_pay/repository/admin_repository.dart';
 import 'package:nagib_pay/repository/auth_repository.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/theme.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +34,9 @@ class NagibPay extends StatelessWidget {
           ),
           RepositoryProvider(
             create: (context) => UserRepository(),
+          ),
+          RepositoryProvider(
+            create: (context) => AdminRepository(),
           ),
         ],
         child: BlocProvider(

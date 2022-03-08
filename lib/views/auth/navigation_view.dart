@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nagib_pay/bloc/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
+import 'package:nagib_pay/views/admin/users_view.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
 import 'package:nagib_pay/views/profile/profile.dart';
 
@@ -11,10 +12,7 @@ class NavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String userRole = context
-        .read<SessionCubit>()
-        .user!
-        .role;
+    String userRole = context.read<SessionCubit>().user!.role;
 
     return BlocProvider(
       create: (context) => BottomNavigationCubit(),
@@ -32,7 +30,7 @@ class NavigationView extends StatelessWidget {
                         const BalanceView(),
                         const ProfileView(),
                         if (userRole == "admin") ...[
-                          const ProfileView(),
+                          const UsersView(),
                         ]
                       ],
                     ),

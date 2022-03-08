@@ -49,18 +49,24 @@ class UserRepository {
 
       return downloadURL;
     } catch (e) {
-      return "";
+      return null;
     }
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> getUserStream() {
-
     String? userID = FirebaseAuth.instance.currentUser?.uid;
-    return FirebaseFirestore.instance.collection('users').doc(userID).snapshots();
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getBalanceHistoryStream() {
     String userID = FirebaseAuth.instance.currentUser!.uid;
-    return FirebaseFirestore.instance.collection('history').where('userId', isEqualTo: userID).orderBy('date', descending: true).snapshots();
+    return FirebaseFirestore.instance
+        .collection('history')
+        .where('userId', isEqualTo: userID)
+        .orderBy('date', descending: true)
+        .snapshots();
   }
 }

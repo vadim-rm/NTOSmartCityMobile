@@ -86,7 +86,6 @@ class _BalanceViewState extends State<BalanceView> {
                         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                             snapshot) {
                       if (snapshot.hasError) {
-                        print(snapshot.error);
                         return const Text('Что-пошло не так');
                       }
 

@@ -1,12 +1,12 @@
 # This is a generated file; do not edit or check into version control.
-cloud_firestore=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-3.1.10/
-cloud_firestore_web=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.6.10/
-firebase_auth=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.9/
-firebase_auth_web=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.3.9/
-firebase_core=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.13.1/
-firebase_core_web=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.1/
-firebase_storage=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.2.9/
-firebase_storage_web=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.2.10/
-flutter_plugin_android_lifecycle=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/
-image_picker=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+10/
-image_picker_for_web=/Users/vadimrm/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.1.6/
+cloud_firestore=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-3.1.10/
+cloud_firestore_web=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.6.10/
+firebase_auth=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.9/
+firebase_auth_web=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.3.9/
+firebase_core=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.13.1/
+firebase_core_web=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.1/
+firebase_storage=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.2.9/
+firebase_storage_web=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.2.10/
+flutter_plugin_android_lifecycle=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.5/
+image_picker=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.4+10/
+image_picker_for_web=/Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.1.6/
