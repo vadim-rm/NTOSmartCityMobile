@@ -254,6 +254,27 @@
             </list>
           </value>
         </entry>
+        <entry key="firebase_storage">
+          <value>
+            <list>
+              <option value="$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.2.9/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="firebase_storage_platform_interface">
+          <value>
+            <list>
+              <option value="$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_platform_interface-4.1.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="firebase_storage_web">
+          <value>
+            <list>
+              <option value="$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.2.10/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="fixnum">
           <value>
             <list>
@@ -671,6 +692,9 @@
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.13.1/lib" />
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-4.2.5/lib" />
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.1/lib" />
+      <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.2.9/lib" />
+      <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_platform_interface-4.1.1/lib" />
+      <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.2.10/lib" />
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-1.0.0/lib" />
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.0.1/lib" />
       <root url="file://$USER_HOME$/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_feather_icons-2.0.0+1/lib" />

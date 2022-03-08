@@ -26,6 +26,7 @@ class NagibPay extends StatelessWidget {
     return MaterialApp(
       title: 'NagibPay',
       theme: nagibTheme,
+      debugShowCheckedModeBanner: false,
       home: MultiRepositoryProvider(
         providers: [
           RepositoryProvider(

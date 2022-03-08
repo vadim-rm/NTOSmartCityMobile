@@ -1,3 +1,5 @@
+import 'dart:io';
+
 abstract class UserEditEvent {}
 
 class Init extends UserEditEvent {}
@@ -24,6 +26,12 @@ class AddressChanged extends UserEditEvent {
   final String address;
 
   AddressChanged({required this.address});
+}
+
+class ImageChanged extends UserEditEvent {
+  final File image;
+
+  ImageChanged({required this.image});
 }
 
 class FormSubmitted extends UserEditEvent {}

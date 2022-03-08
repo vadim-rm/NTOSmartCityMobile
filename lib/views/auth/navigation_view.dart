@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nagib_pay/bloc/bottom_navigation/bottom_navigation_cubit.dart';
+import 'package:nagib_pay/bloc/session/session_cubit.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
 import 'package:nagib_pay/views/profile/profile.dart';
 
@@ -10,6 +11,11 @@ class NavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userRole = context
+        .read<SessionCubit>()
+        .user!
+        .role;
+
     return BlocProvider(
       create: (context) => BottomNavigationCubit(),
       child: BlocBuilder<BottomNavigationCubit, int>(
@@ -22,9 +28,12 @@ class NavigationView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: IndexedStack(
                       index: currentIndex,
-                      children: const [
-                        BalanceView(),
-                        ProfileView(),
+                      children: [
+                        const BalanceView(),
+                        const ProfileView(),
+                        if (userRole == "admin") ...[
+                          const ProfileView(),
+                        ]
                       ],
                     ),
                   ),
@@ -40,15 +49,21 @@ class NavigationView extends StatelessWidget {
                   selectedIndex: currentIndex,
                   onDestinationSelected: (index) =>
                       context.read<BottomNavigationCubit>().selectTab(index),
-                  destinations: const [
-                    NavigationDestination(
+                  destinations: [
+                    const NavigationDestination(
                       icon: Icon(FeatherIcons.creditCard),
                       label: "Мои Е-баллы",
                     ),
-                    NavigationDestination(
+                    const NavigationDestination(
                       icon: Icon(FeatherIcons.user),
                       label: "Моё ебало",
-                    )
+                    ),
+                    if (userRole == "admin") ...[
+                      const NavigationDestination(
+                        icon: Icon(FeatherIcons.users),
+                        label: "Все ебалы",
+                      )
+                    ]
                   ],
                 ),
               ],

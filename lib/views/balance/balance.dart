@@ -6,6 +6,7 @@ import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 import 'package:nagib_pay/widgets/data_card.dart';
 
+import '../../models/history_action.dart';
 import '../../models/user.dart';
 
 class BalanceView extends StatefulWidget {
@@ -22,12 +23,15 @@ class _BalanceViewState extends State<BalanceView> {
     final Stream<DocumentSnapshot> userStream =
         context.read<UserRepository>().getUserStream();
 
+    final Stream<QuerySnapshot<Map<String, dynamic>>> historyStream =
+        context.read<UserRepository>().getBalanceHistoryStream();
+
     return Scaffold(
       appBar: CustomAppBar(
         title: const Text("Баланс"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: StreamBuilder<DocumentSnapshot>(
             stream: userStream,
             builder: (BuildContext context,
@@ -65,17 +69,64 @@ class _BalanceViewState extends State<BalanceView> {
                     value: newUser.trashCounter.toString(),
                     units: 'мешков',
                     image: const Padding(
-                      padding: EdgeInsets.only(
-                        top: 10,
-                        right: 10,
-                        left: 6
-                      ),
+                      padding: EdgeInsets.only(top: 10, right: 10, left: 6),
                       child: Image(
                         height: 44,
                         width: 44,
                         image: AssetImage('assets/basket.png'),
                       ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: historyStream,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return const Text('Что-пошло не так');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: snapshot.data!.docs.map(
+                          (DocumentSnapshot document) {
+                            HistoryAction data = HistoryAction.fromJson(
+                                document.data() as Map<String, dynamic>);
+                            return Card(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Image(
+                                      height: 40,
+                                      width: 40,
+                                      image: AssetImage(data.imagePath),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      data.actionDescription,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      );
+                    },
                   ),
                 ],
               );

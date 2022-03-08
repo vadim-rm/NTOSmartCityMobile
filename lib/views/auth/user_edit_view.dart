@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -89,10 +91,27 @@ class UserEditView extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 final ImagePicker _picker = ImagePicker();
-                final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                final XFile? image = await _picker.pickImage(
+                  source: ImageSource.gallery,
+                  maxHeight: 400,
+                  maxWidth: 400,
+                );
+
+                if (image != null) {
+                  context.read<UserEditBloc>().add(
+                        ImageChanged(
+                          image: File(image.path),
+                        ),
+                      );
+                }
               },
               child: CircleAvatar(
                 radius: 64,
+                foregroundImage: state.avatar != null
+                    ? FileImage(
+                        state.avatar!,
+                      )
+                    : null,
                 child: Text(
                   state.user!.initials,
                   style: const TextStyle(fontSize: 52),

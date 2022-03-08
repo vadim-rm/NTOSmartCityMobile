@@ -52,16 +52,16 @@ class User {
       case 'admin':
         return 'Администратор';
       case "staff":
-        return "Обслуживающий персонал";
+        return "Обслуживающий\nперсонал";
     }
     return "";
   }
 
-  String get fullName => "$name $surname";
+  String get fullName => "$surname $name";
 
   String get initials {
     if (name.isNotEmpty && surname.isNotEmpty) {
-      return "${name[0].toUpperCase()}${surname[0].toUpperCase()}";
+      return "${surname[0].toUpperCase()}${name[0].toUpperCase()}";
     }
     return "__";
   }

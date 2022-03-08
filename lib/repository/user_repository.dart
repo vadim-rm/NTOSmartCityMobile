@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nagib_pay/bloc/failure.dart';
 import 'package:nagib_pay/models/user.dart' as account;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UserRepository {
   Future<void> createUser(account.User user) async {
@@ -35,13 +36,31 @@ class UserRepository {
     try {
       await users.doc(userID).update(user.toJson());
     } catch (e) {
-      print(e);
       throw Failure(ErrorCode.INTERNAL);
     }
   }
 
+  Future<String?> getAvatarUrl({String? userID}) async {
+    userID ??= FirebaseAuth.instance.currentUser?.uid;
+    try {
+      String downloadURL = await firebase_storage.FirebaseStorage.instance
+          .ref('avatars/$userID.png')
+          .getDownloadURL();
+
+      return downloadURL;
+    } catch (e) {
+      return "";
+    }
+  }
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> getUserStream() {
+
     String? userID = FirebaseAuth.instance.currentUser?.uid;
     return FirebaseFirestore.instance.collection('users').doc(userID).snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getBalanceHistoryStream() {
+    String userID = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseFirestore.instance.collection('history').where('userId', isEqualTo: userID).orderBy('date', descending: true).snapshots();
   }
 }

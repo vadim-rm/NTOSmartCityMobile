@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:nagib_pay/bloc/failure.dart';
 import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
@@ -8,6 +11,7 @@ import 'package:nagib_pay/bloc/user_edit/user_edit_state.dart';
 import 'package:nagib_pay/models/user.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/extensions/string_extension.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   final SessionCubit sessionCubit;
@@ -62,7 +66,7 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     );
 
     on<MiddleNameChanged>(
-          (event, emit) => emit(
+      (event, emit) => emit(
         state.copyWith(
           user: state.user!.copyWith(
             middleName: event.middleName,
@@ -72,11 +76,19 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
     );
 
     on<AddressChanged>(
-          (event, emit) => emit(
+      (event, emit) => emit(
         state.copyWith(
           user: state.user!.copyWith(
             address: event.address,
           ),
+        ),
+      ),
+    );
+
+    on<ImageChanged>(
+      (event, emit) => emit(
+        state.copyWith(
+          avatar: event.image,
         ),
       ),
     );
@@ -94,6 +106,15 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
           ),
         );
         try {
+          if (state.avatar != null) {
+            File avatar = state.avatar!;
+
+            await firebase_storage.FirebaseStorage.instance
+                .ref(
+                    'avatars/${firebase_auth.FirebaseAuth.instance.currentUser?.uid}.png')
+                .putFile(avatar);
+          }
+
           await userRepository.updateUser(state.user!);
           await sessionCubit.setUser(user: state.user!);
           emit(state.copyWith(formStatus: SubmissionSuccess()));
