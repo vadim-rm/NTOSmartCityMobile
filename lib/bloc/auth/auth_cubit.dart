@@ -12,7 +12,7 @@ class AuthCubit extends Cubit<AuthNavigationState> {
   void showAuth() => emit(AuthNavigationState.auth);
 
   void launchSession(User user) {
-    sessionCubit.setUser(user: user);
     sessionCubit.showSession();
+    sessionCubit.setUser(user: user);
   }
 }

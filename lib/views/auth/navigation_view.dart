@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nagib_pay/bloc/bottom_navigation/bottom_navigation_cubit.dart';
+import 'package:nagib_pay/views/balance/balance.dart';
+import 'package:nagib_pay/views/profile/profile.dart';
 
 class NavigationView extends StatelessWidget {
   const NavigationView({Key? key}) : super(key: key);
@@ -20,9 +22,9 @@ class NavigationView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: IndexedStack(
                       index: currentIndex,
-                      children: [
-                        Container(),
-                        Container(),
+                      children: const [
+                        BalanceView(),
+                        ProfileView(),
                       ],
                     ),
                   ),

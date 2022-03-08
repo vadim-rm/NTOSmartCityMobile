@@ -7,27 +7,64 @@ part 'user.g.dart';
 class User {
   final String name;
   final String surname;
+  final String middleName;
+  final String address;
   final double balance;
+  final String role;
+  final int trashCounter;
 
   User({
-    required this.name,
-    required this.surname,
-    required this.balance,
+    this.name = '',
+    this.surname = '',
+    this.middleName = '',
+    this.address = '',
+    this.balance = 0,
+    this.role = 'user',
+    this.trashCounter = 0,
   });
 
   User copyWith({
     String? name,
     String? surname,
+    String? middleName,
+    String? address,
     double? balance,
+    String? role,
+    int? trashCounter,
   }) {
     return User(
       name: name ?? this.name,
       surname: surname ?? this.surname,
+      middleName: middleName ?? this.middleName,
+      address: address ?? this.address,
       balance: balance ?? this.balance,
+      role: role ?? this.role,
+      trashCounter: trashCounter ?? this.trashCounter,
     );
   }
 
   bool get isInfoNeeded => name == "" || surname == "";
+
+  String get roleDescription {
+    switch (role) {
+      case 'user':
+        return 'Пользователь';
+      case 'admin':
+        return 'Администратор';
+      case "staff":
+        return "Обслуживающий персонал";
+    }
+    return "";
+  }
+
+  String get fullName => "$name $surname";
+
+  String get initials {
+    if (name.isNotEmpty && surname.isNotEmpty) {
+      return "${name[0].toUpperCase()}${surname[0].toUpperCase()}";
+    }
+    return "__";
+  }
 
   @override
   operator ==(other) =>

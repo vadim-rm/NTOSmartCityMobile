@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
 import 'package:nagib_pay/bloc/user_edit/user_edit_bloc.dart';
 import 'package:nagib_pay/bloc/user_edit/user_edit_event.dart';
@@ -67,12 +68,49 @@ class UserEditView extends StatelessWidget {
             runSpacing: 24,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
+              _avatarPreview(),
               _nameField(),
               _surnameField(),
+              _middleNameField(),
+              _addressField(),
               _formSubmitButton(),
             ]),
       ),
     );
+  }
+
+  Widget _avatarPreview() {
+    return BlocBuilder<UserEditBloc, UserEditState>(builder: (context, state) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () async {
+                final ImagePicker _picker = ImagePicker();
+                final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+              },
+              child: CircleAvatar(
+                radius: 64,
+                child: Text(
+                  state.user!.initials,
+                  style: const TextStyle(fontSize: 52),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Нажмите,\nчтобы добавить фото",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _nameField() {
@@ -82,8 +120,8 @@ class UserEditView extends StatelessWidget {
           labelText: 'Имя',
         ),
         autofillHints: const [AutofillHints.givenName],
-        validator: (_) => state.isNameValid
-            ? "Имя должно содержать только русские буквы"
+        validator: (_) => state.isNameNotValid
+            ? "Имя должно содержать хотя бы две буквы"
             : null,
         initialValue: state.user!.name,
         onChanged: (name) => context.read<UserEditBloc>().add(
@@ -100,8 +138,8 @@ class UserEditView extends StatelessWidget {
           labelText: 'Фамилия',
         ),
         autofillHints: const [AutofillHints.familyName],
-        validator: (_) => state.isNameValid
-            ? "Фамилия должна содержать только русские буквы"
+        validator: (_) => state.isSurnameNotValid
+            ? "Фамилия должна содержать хотя бы две буквы"
             : null,
         initialValue: state.user!.surname,
         onChanged: (surname) => context.read<UserEditBloc>().add(
@@ -114,6 +152,56 @@ class UserEditView extends StatelessWidget {
         },
       );
     });
+  }
+
+  Widget _middleNameField() {
+    return BlocBuilder<UserEditBloc, UserEditState>(
+      builder: (context, state) {
+        return TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Отчество',
+          ),
+          autofillHints: const [AutofillHints.middleName],
+          validator: (_) => state.isMiddleNameNotValid
+              ? "Отчество должно содержать хотя бы две буквы"
+              : null,
+          initialValue: state.user!.middleName,
+          onChanged: (middleName) => context.read<UserEditBloc>().add(
+                MiddleNameChanged(middleName: middleName),
+              ),
+          onFieldSubmitted: (_) {
+            if (_formKey.currentState!.validate()) {
+              context.read<UserEditBloc>().add(FormSubmitted());
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget _addressField() {
+    return BlocBuilder<UserEditBloc, UserEditState>(
+      builder: (context, state) {
+        return TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Адрес',
+          ),
+          autofillHints: const [AutofillHints.middleName],
+          validator: (_) => state.isAddressNotValid
+              ? "Адрес должен содержать хотя бы две буквы"
+              : null,
+          initialValue: state.user!.address,
+          onChanged: (address) => context.read<UserEditBloc>().add(
+                AddressChanged(address: address),
+              ),
+          onFieldSubmitted: (_) {
+            if (_formKey.currentState!.validate()) {
+              context.read<UserEditBloc>().add(FormSubmitted());
+            }
+          },
+        );
+      },
+    );
   }
 
   Widget _formSubmitButton() {

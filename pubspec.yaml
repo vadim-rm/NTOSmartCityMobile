@@ -43,6 +43,8 @@ dependencies:
   cloud_firestore: ^3.1.10
   json_serializable: ^6.1.4
 
+  image_picker: ^0.8.4+10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,6 +75,8 @@ flutter:
   assets:
     - assets/g_logo.png
     - assets/waving_hand.png
+    - assets/money.png
+    - assets/basket.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

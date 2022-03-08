@@ -1,14 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 enum ErrorCode {
   USER_NOT_FOUND,
   LOGIN_WITH_EMAIL,
   USER_ALREADY_EXISTS,
   PASSWORD_INCORRECT,
-  INTERNAL,
   USER_NOT_LOGGED,
+  INVALID_EMAIL,
+  USER_NOT_CREATED,
+  INTERNAL,
 }
 
 class Failure {
@@ -30,8 +30,10 @@ class Failure {
         return "Неверный пароль";
       case ErrorCode.USER_NOT_LOGGED:
         return "Войдите в аккаунт повторно";
-      case ErrorCode.INTERNAL:
-        return "Произошла внутренняя ошибка:\n$message";
+      case ErrorCode.INVALID_EMAIL:
+        return "Такого Email не существует";
+      default:
+        return "Произошла внутренняя ошибка";
     }
   }
 
@@ -45,6 +47,8 @@ class Failure {
         return Failure(ErrorCode.LOGIN_WITH_EMAIL);
       case "wrong-password":
         return Failure(ErrorCode.PASSWORD_INCORRECT);
+      case "invalid-email":
+        return Failure(ErrorCode.INVALID_EMAIL);
       default:
         return Failure(ErrorCode.INTERNAL);
     }

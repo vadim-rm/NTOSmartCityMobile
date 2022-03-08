@@ -5,7 +5,7 @@ import 'package:nagib_pay/bloc/auth/auth_cubit.dart';
 import 'package:nagib_pay/bloc/auth/auth_event.dart';
 import 'package:nagib_pay/bloc/auth/auth_state.dart';
 import 'package:nagib_pay/bloc/auth/form_mode.dart';
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/repository/auth_repository.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/widgets/custom_alert_dialog.dart';

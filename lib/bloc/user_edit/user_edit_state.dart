@@ -1,14 +1,18 @@
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/models/user.dart';
 
 class UserEditState {
   final User? user;
   final bool loaded;
 
-  bool get isNameValid =>
-      user != null && !RegExp(r"^[А-Яа-я]+$").hasMatch(user!.name);
+  bool get isNameNotValid =>
+      user != null && user!.name.length < 2;
 
-  bool get isSurnameValid => !RegExp(r"^[А-Яа-я]+$").hasMatch(user!.surname);
+  bool get isSurnameNotValid => user!.surname.length < 2;
+
+  bool get isMiddleNameNotValid => user!.middleName.length < 2;
+
+  bool get isAddressNotValid => user!.address.length < 2;
 
   final FormSubmissionStatus formStatus;
 

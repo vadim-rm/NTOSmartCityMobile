@@ -4,7 +4,7 @@ import 'package:nagib_pay/bloc/auth/auth_event.dart';
 import 'package:nagib_pay/bloc/auth/auth_state.dart';
 import 'package:nagib_pay/bloc/auth/form_mode.dart';
 import 'package:nagib_pay/bloc/failure.dart';
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/models/user.dart';
 import 'package:nagib_pay/repository/auth_repository.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
@@ -13,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthCubit authCubit;
   final AuthRepository authRepository;
   final UserRepository userRepository;
+
   AuthBloc({
     required this.authCubit,
     required this.authRepository,
@@ -76,17 +77,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               email: state.email, password: state.password);
         }
         emit(state.copyWith(formStatus: SubmissionSuccess()));
-        User user;
+
+        User? user;
         try {
           user = await userRepository.getCurrentUser();
         } on Failure catch (e) {
-          print(e.code.toString());
-          if (e.code == ErrorCode.USER_NOT_LOGGED) {
+          if (e.code == ErrorCode.USER_NOT_CREATED) {
             user = User(balance: 0, name: "", surname: "");
+            await userRepository.createUser(user);
           } else {
             rethrow;
           }
         }
+
         authCubit.launchSession(user);
       } on Failure catch (e) {
         emit(state.copyWith(formStatus: SubmissionFailed(e)));

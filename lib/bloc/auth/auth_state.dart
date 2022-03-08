@@ -1,4 +1,4 @@
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 
 import 'form_mode.dart';
 

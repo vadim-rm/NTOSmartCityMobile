@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nagib_pay/bloc/failure.dart';
 import 'package:nagib_pay/bloc/session/session_state.dart';
 import 'package:nagib_pay/models/user.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
@@ -40,6 +42,7 @@ class SessionCubit extends Cubit<SessionState> {
 
   void signOut({bool endSession = true}) async {
     try {
+      await firebase.FirebaseAuth.instance.signOut();
       emit(Unauthenticated());
     } catch (e) {
       emit(Unauthenticated());
@@ -49,9 +52,9 @@ class SessionCubit extends Cubit<SessionState> {
   void attemptAutoLogin() async {
     try {
       User user = await userRepository.getCurrentUser();
-      setUser(user: user);
       emit(Authenticated());
-    } on Exception {
+      setUser(user: user);
+    } on Failure {
       emit(Unauthenticated());
     }
   }

@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:nagib_pay/bloc/failure.dart';
-import 'package:nagib_pay/bloc/from_sbmission_status.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
 import 'package:nagib_pay/bloc/session/session_state.dart';
 import 'package:nagib_pay/bloc/user_edit/user_edit_event.dart';
 import 'package:nagib_pay/bloc/user_edit/user_edit_state.dart';
 import 'package:nagib_pay/models/user.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
-import 'package:nagib_pay/extensions/StringExtension.dart';
+import 'package:nagib_pay/extensions/string_extension.dart';
 
 class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
   final SessionCubit sessionCubit;
@@ -61,19 +61,41 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
       ),
     );
 
+    on<MiddleNameChanged>(
+          (event, emit) => emit(
+        state.copyWith(
+          user: state.user!.copyWith(
+            middleName: event.middleName,
+          ),
+        ),
+      ),
+    );
+
+    on<AddressChanged>(
+          (event, emit) => emit(
+        state.copyWith(
+          user: state.user!.copyWith(
+            address: event.address,
+          ),
+        ),
+      ),
+    );
+
     on<FormSubmitted>(
       (event, emit) async {
-        emit(state.copyWith(
-          formStatus: FormSubmitting(),
-          user: state.user!.copyWith(
-            name: state.user!.name.capitalize(),
-            surname: state.user!.surname.capitalize(),
+        emit(
+          state.copyWith(
+            formStatus: FormSubmitting(),
+            user: state.user!.copyWith(
+              name: state.user!.name.capitalize(),
+              surname: state.user!.surname.capitalize(),
+              middleName: state.user!.middleName.capitalize(),
+            ),
           ),
-        ));
+        );
         try {
           await userRepository.updateUser(state.user!);
-          await sessionCubit.setUser(
-              user: await userRepository.getCurrentUser());
+          await sessionCubit.setUser(user: state.user!);
           emit(state.copyWith(formStatus: SubmissionSuccess()));
           sessionCubit.popFromEditView();
         } on Failure catch (e) {

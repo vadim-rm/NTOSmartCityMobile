@@ -14,4 +14,16 @@ class SurnameChanged extends UserEditEvent {
   SurnameChanged({required this.surname});
 }
 
+class MiddleNameChanged extends UserEditEvent {
+  final String middleName;
+
+  MiddleNameChanged({required this.middleName});
+}
+
+class AddressChanged extends UserEditEvent {
+  final String address;
+
+  AddressChanged({required this.address});
+}
+
 class FormSubmitted extends UserEditEvent {}

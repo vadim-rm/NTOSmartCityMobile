@@ -1,38 +1,47 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nagib_pay/bloc/failure.dart';
-import 'package:nagib_pay/models/user.dart' as Account;
+import 'package:nagib_pay/models/user.dart' as account;
 
 class UserRepository {
-  Future<void> createUser(Account.User user) async {
+  Future<void> createUser(account.User user) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
+    String? userID = FirebaseAuth.instance.currentUser?.uid;
 
     try {
-      await users.add(user.toJson());
-    } catch (_) {
+      await users.doc(userID).set(user.toJson());
+    } catch (e) {
       throw Failure(ErrorCode.INTERNAL);
     }
   }
 
-  Future<Account.User> getCurrentUser() async {
+  Future<account.User> getCurrentUser() async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     String? userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Failure(ErrorCode.USER_NOT_LOGGED);
+    }
     DocumentSnapshot snapshot = await users.doc(userID).get();
     if (snapshot.exists) {
-      return Account.User.fromJson(snapshot.data() as Map<String, dynamic>);
+      return account.User.fromJson(snapshot.data() as Map<String, dynamic>);
+    } else {
+      throw Failure(ErrorCode.USER_NOT_CREATED);
     }
-    throw Failure(ErrorCode.USER_NOT_LOGGED);
   }
 
-  Future<void> updateUser(Account.User user) async {
+  Future<void> updateUser(account.User user) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     String? userID = FirebaseAuth.instance.currentUser?.uid;
     try {
       await users.doc(userID).update(user.toJson());
-    } catch (_) {
+    } catch (e) {
+      print(e);
       throw Failure(ErrorCode.INTERNAL);
     }
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserStream() {
+    String? userID = FirebaseAuth.instance.currentUser?.uid;
+    return FirebaseFirestore.instance.collection('users').doc(userID).snapshots();
   }
 }

@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               margin: const EdgeInsets.only(left: 8),
               child: IconButton(
                 splashRadius: 18,
-                color: Colors.white70,
+                color: Colors.black,
                 icon: const Icon(
                   Icons.chevron_left,
                   size: 26,

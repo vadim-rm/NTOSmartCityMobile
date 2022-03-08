@@ -8,7 +8,6 @@ class CustomAlertDialog {
       actions: <Widget>[
         popButton(context: context)
       ],
-      backgroundColor: const Color(0xFF121212),
       titleTextStyle: Theme.of(context).textTheme.bodyText1,
       contentTextStyle: Theme.of(context).textTheme.subtitle1,
     );
