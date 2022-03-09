@@ -7,6 +7,7 @@ import 'package:nagib_pay/bloc/session/session_cubit.dart';
 import 'package:nagib_pay/firebase_options.dart';
 import 'package:nagib_pay/repository/admin_repository.dart';
 import 'package:nagib_pay/repository/auth_repository.dart';
+import 'package:nagib_pay/repository/staff_repository.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/theme.dart';
 
@@ -39,6 +40,9 @@ class NagibPay extends StatelessWidget {
           ),
           RepositoryProvider(
             create: (context) => AdminRepository(),
+          ),
+          RepositoryProvider(
+            create: (context) => StaffRepository(),
           ),
         ],
         child: BlocProvider(

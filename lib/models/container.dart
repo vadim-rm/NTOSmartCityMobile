@@ -54,7 +54,7 @@ class TrashContainer {
   }
 
   factory TrashContainer.fromJson(Map<String, dynamic> json) =>
-      _$ContainerFromJson(json);
+      _$TrashContainerFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ContainerToJson(this);
+  Map<String, dynamic> toJson() => _$TrashContainerToJson(this);
 }

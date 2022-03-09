@@ -6,16 +6,18 @@ part of 'container.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TrashContainer _$ContainerFromJson(Map<String, dynamic> json) => TrashContainer(
+TrashContainer _$TrashContainerFromJson(Map<String, dynamic> json) =>
+    TrashContainer(
       type: json['type'] as String,
-      history: (json['history'] as List<dynamic>?)
-          ?.map((e) => HistoryAction.fromJson(e as Map<String, dynamic>))
-          .toList(),
       trashCounter: json['trashCounter'] as int? ?? 0,
+      id: json['id'] as String?,
+      blocked: json['blocked'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$ContainerToJson(TrashContainer instance) => <String, dynamic>{
+Map<String, dynamic> _$TrashContainerToJson(TrashContainer instance) =>
+    <String, dynamic>{
       'type': instance.type,
       'trashCounter': instance.trashCounter,
-      'history': instance.history,
+      'blocked': instance.blocked,
+      'id': instance.id,
     };

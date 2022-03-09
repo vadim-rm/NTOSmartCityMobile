@@ -7,6 +7,7 @@ import 'package:nagib_pay/views/admin/containers_view.dart';
 import 'package:nagib_pay/views/admin/users_view.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
 import 'package:nagib_pay/views/profile/profile.dart';
+import 'package:nagib_pay/views/staff/bluetooth_view.dart';
 
 import '../admin/history.dart';
 
@@ -36,7 +37,9 @@ class NavigationView extends StatelessWidget {
                           const UsersView(),
                           const HistoryView(),
                           const ContainersView(),
-                        ]
+                        ] else if (userRole == "staff") ...[
+                          const BluetoothView(),
+                        ],
                       ],
                     ),
                   ),
@@ -73,8 +76,13 @@ class NavigationView extends StatelessWidget {
                       const NavigationDestination(
                         icon: Icon(FeatherIcons.trash),
                         label: "Состояние ебал",
-                      )
-                    ]
+                      ),
+                    ] else if (userRole == "staff") ...[
+                      const NavigationDestination(
+                        icon: Icon(FeatherIcons.trash),
+                        label: "Проверка станции",
+                      ),
+                    ],
                   ],
                 ),
               ],

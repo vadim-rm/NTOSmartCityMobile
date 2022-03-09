@@ -11,7 +11,6 @@ class HistoryAction {
   final DateTime date;
   final int amount;
   final String userId;
-  final int? containerId;
 
   @JsonKey(ignore: true)
   final User? user;
@@ -22,8 +21,7 @@ class HistoryAction {
       required this.date,
       required this.amount,
       required this.userId,
-      this.user,
-      this.containerId});
+      this.user,});
 
   HistoryAction copyWith({
     String? type,
@@ -32,7 +30,6 @@ class HistoryAction {
     int? amount,
     String? userId,
     User? user,
-    int? containerId,
   }) {
     return HistoryAction(
       type: type ?? this.type,
@@ -41,7 +38,6 @@ class HistoryAction {
       amount: amount ?? this.amount,
       userId: userId ?? this.userId,
       user: user ?? this.user,
-      containerId: containerId ?? this.containerId,
     );
   }
 
