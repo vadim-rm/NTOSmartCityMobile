@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:nagib_pay/models/user.dart';
 
 part 'history_action.g.dart';
 
@@ -10,14 +11,39 @@ class HistoryAction {
   final DateTime date;
   final int amount;
   final String userId;
+  final int? containerId;
 
-  HistoryAction({
-    required this.type,
-    required this.action,
-    required this.date,
-    required this.amount,
-    required this.userId,
-  });
+  @JsonKey(ignore: true)
+  final User? user;
+
+  HistoryAction(
+      {required this.type,
+      required this.action,
+      required this.date,
+      required this.amount,
+      required this.userId,
+      this.user,
+      this.containerId});
+
+  HistoryAction copyWith({
+    String? type,
+    String? action,
+    DateTime? date,
+    int? amount,
+    String? userId,
+    User? user,
+    int? containerId,
+  }) {
+    return HistoryAction(
+      type: type ?? this.type,
+      action: action ?? this.action,
+      date: date ?? this.date,
+      amount: amount ?? this.amount,
+      userId: userId ?? this.userId,
+      user: user ?? this.user,
+      containerId: containerId ?? this.containerId,
+    );
+  }
 
   factory HistoryAction.fromJson(Map<String, dynamic> json) =>
       _$HistoryActionFromJson(json);
@@ -58,7 +84,8 @@ class HistoryAction {
     return "assets/dollar.png";
   }
 
-  static DateTime _fromJson(int date) => DateTime.fromMillisecondsSinceEpoch(date);
+  static DateTime _fromJson(int date) =>
+      DateTime.fromMillisecondsSinceEpoch(date);
 
   static int _toJson(DateTime time) => time.millisecondsSinceEpoch;
 }

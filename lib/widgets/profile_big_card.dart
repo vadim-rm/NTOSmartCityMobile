@@ -96,7 +96,7 @@ class ProfileBigCard extends StatelessWidget {
                           onChanged: (balance) =>
                               context.read<BalanceBloc>().add(
                                     BalanceChanged(
-                                      balance: int.parse(balance),
+                                      balance: int.parse(balance.isEmpty ? "0" : balance),
                                     ),
                                   ),
                           style:

@@ -27,20 +27,35 @@ class HistoryItem extends StatelessWidget {
               width: 20,
             ),
             Expanded(
-              flex: 4,
-              child: Text(
-                action.actionDescription,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
+                flex: 4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (action.user != null) ...[
+                      Text(
+                        action.user!.fullName,
+                        style: Theme.of(context).textTheme.caption,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                    Text(
+                      action.actionDescription,
+                      style: Theme.of(context).textTheme.bodyText1,
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                )),
+            const Spacer(),
             Expanded(
-              flex: 1,
-              child: Text(
-                action.date.format(),
-                style: Theme.of(context).textTheme.caption,
-                // maxLines: 2,
-              ),
-            ),
+                flex: 1,
+                child: Text(
+                  action.date.format(),
+                  textAlign: TextAlign.end,
+                  style: Theme.of(context).textTheme.caption,
+                  softWrap: true,
+                  // maxLines: 2,
+                )),
           ],
         ),
       ),

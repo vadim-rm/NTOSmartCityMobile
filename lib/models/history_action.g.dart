@@ -13,6 +13,7 @@ HistoryAction _$HistoryActionFromJson(Map<String, dynamic> json) =>
       date: HistoryAction._fromJson(json['date'] as int),
       amount: json['amount'] as int,
       userId: json['userId'] as String,
+      containerId: json['containerId'] as int?,
     );
 
 Map<String, dynamic> _$HistoryActionToJson(HistoryAction instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$HistoryActionToJson(HistoryAction instance) =>
       'date': HistoryAction._toJson(instance.date),
       'amount': instance.amount,
       'userId': instance.userId,
+      'containerId': instance.containerId,
     };

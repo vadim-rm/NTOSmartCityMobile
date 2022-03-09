@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nagib_pay/bloc/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
+import 'package:nagib_pay/views/admin/containers_view.dart';
 import 'package:nagib_pay/views/admin/users_view.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
 import 'package:nagib_pay/views/profile/profile.dart';
@@ -34,6 +35,7 @@ class NavigationView extends StatelessWidget {
                         if (userRole == "admin") ...[
                           const UsersView(),
                           const HistoryView(),
+                          const ContainersView(),
                         ]
                       ],
                     ),
@@ -67,6 +69,10 @@ class NavigationView extends StatelessWidget {
                       const NavigationDestination(
                         icon: Icon(FeatherIcons.list),
                         label: "Движения ебалов",
+                      ),
+                      const NavigationDestination(
+                        icon: Icon(FeatherIcons.trash),
+                        label: "Состояние ебал",
                       )
                     ]
                   ],

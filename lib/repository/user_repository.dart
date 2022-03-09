@@ -61,11 +61,12 @@ class UserRepository {
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getBalanceHistoryStream() {
-    String userID = FirebaseAuth.instance.currentUser!.uid;
+  Stream<QuerySnapshot<Map<String, dynamic>>> getBalanceHistoryStream(
+      {String? userId}) {
+    userId ??= FirebaseAuth.instance.currentUser!.uid;
     return FirebaseFirestore.instance
         .collection('history')
-        .where('userId', isEqualTo: userID)
+        .where('userId', isEqualTo: userId)
         .orderBy('date', descending: true)
         .snapshots();
   }
