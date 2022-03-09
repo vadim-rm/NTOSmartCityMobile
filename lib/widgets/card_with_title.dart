@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CardWithTitle extends StatelessWidget {
   final String title;
-  final String body;
+  final Widget body;
 
   const CardWithTitle({
     required this.title,
@@ -14,27 +14,23 @@ class CardWithTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ],
-                ),
                 Text(
-                  body,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  softWrap: true,
-                  maxLines: 5,
-                  overflow: TextOverflow.fade,
+                  title,
+                  style: Theme.of(context).textTheme.caption,
                 ),
-              ])),
+              ],
+            ),
+            body,
+          ],
+        ),
+      ),
     );
   }
 }

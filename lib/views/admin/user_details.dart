@@ -14,10 +14,14 @@ class UserDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: Text("Информация о пользователе")),
-      body: ListView(children: [
-        ProfileBigCard(user: user),
-      ]),
+      appBar: CustomAppBar(
+        title: const Text("Информация о пользователе"),
+      ),
+      body: ListView(
+        children: [
+          ProfileBigCard(user: user),
+        ],
+      ),
     );
   }
 }

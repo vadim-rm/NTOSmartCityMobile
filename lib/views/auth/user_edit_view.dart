@@ -54,11 +54,6 @@ class UserEditView extends StatelessWidget {
     );
   }
 
-  void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   Widget _infoForm() {
     return Container(

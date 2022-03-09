@@ -9,9 +9,11 @@ class User {
   final String surname;
   final String middleName;
   final String address;
-  final double balance;
+  final int balance;
   final String role;
   final int trashCounter;
+  @JsonKey(ignore: true)
+  final String? id;
 
   User({
     this.name = '',
@@ -21,6 +23,7 @@ class User {
     this.balance = 0,
     this.role = 'user',
     this.trashCounter = 0,
+    this.id,
   });
 
   User copyWith({
@@ -28,9 +31,10 @@ class User {
     String? surname,
     String? middleName,
     String? address,
-    double? balance,
+    int? balance,
     String? role,
     int? trashCounter,
+    String? id,
   }) {
     return User(
       name: name ?? this.name,
@@ -40,6 +44,7 @@ class User {
       balance: balance ?? this.balance,
       role: role ?? this.role,
       trashCounter: trashCounter ?? this.trashCounter,
+      id: id ?? this.id,
     );
   }
 
@@ -67,6 +72,8 @@ class User {
   }
 
   String get fullNameWithMiddle => "$surname $name $middleName";
+
+  String get searchData => "$fullNameWithMiddle $address $roleDescription";
 
   @override
   operator ==(other) =>

@@ -1,19 +1,23 @@
 import 'package:nagib_pay/models/user.dart';
 
 class UsersState {
-  final List<User?> users;
+  final List<User?> allUsers;
+  final List<User?> filteredUsers;
   final bool loaded;
   UsersState({
-    this.users = const [],
+    this.allUsers = const [],
+    this.filteredUsers = const [],
     this.loaded = false,
   });
 
   UsersState copyWith({
-    List<User?>? users,
+    List<User?>? allUsers,
+    List<User?>? filteredUsers,
     bool? loaded,
   }) {
     return UsersState(
-      users: users ?? this.users,
+      allUsers: allUsers ?? this.allUsers,
+      filteredUsers: filteredUsers ?? this.filteredUsers,
       loaded: loaded ?? this.loaded,
     );
   }

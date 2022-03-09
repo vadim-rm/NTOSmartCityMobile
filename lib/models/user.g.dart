@@ -11,7 +11,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       surname: json['surname'] as String? ?? '',
       middleName: json['middleName'] as String? ?? '',
       address: json['address'] as String? ?? '',
-      balance: (json['balance'] as num?)?.toDouble() ?? 0,
+      balance: json['balance'] as int? ?? 0,
       role: json['role'] as String? ?? 'user',
       trashCounter: json['trashCounter'] as int? ?? 0,
     );

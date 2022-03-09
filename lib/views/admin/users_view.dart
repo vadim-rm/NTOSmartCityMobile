@@ -22,38 +22,57 @@ class UsersView extends StatelessWidget {
         create: (context) => UsersBloc(
           adminRepository: context.read<AdminRepository>(),
         )..add(Init()),
-        child: BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
-          if (!state.loaded) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Container(
+        child: BlocBuilder<UsersBloc, UsersState>(
+          builder: (context, state) {
+            if (!state.loaded) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Container(
               margin: const EdgeInsets.symmetric(
                 horizontal: 16.0,
                 vertical: 8,
               ),
               child: RefreshIndicator(
-                child: ListView(children: [
-                  SearchBar(),
-                  ...state.users
-                      .map((user) => GestureDetector(
+                child: ListView(
+                  children: [
+                    SearchBar(
+                      onTextChanged: (text) => context.read<UsersBloc>().add(
+                            SearchBarTextChanged(
+                              text: text,
+                            ),
+                          ),
+                    ),
+                    ...state.filteredUsers
+                        .map(
+                          (user) => GestureDetector(
                             child: ProfileCard(
                               user: user!,
                               showRole: false,
                             ),
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return UserDetailsView(user: user);
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return UserDetailsView(
+                                      user: user,
+                                    );
+                                  },
+                                ),
+                              ).then((_) => context.read<UsersBloc>().add(Init()));
                             },
-                          ))
-                      .toList(),
-                ]),
+                          ),
+                        )
+                        .toList(),
+                  ],
+                ),
                 onRefresh: () async {
                   context.read<UsersBloc>().add(Init());
                 },
-              ));
-        }),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

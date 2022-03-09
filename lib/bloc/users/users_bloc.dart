@@ -14,21 +14,27 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
       (event, emit) async {
         List<User?> users = await adminRepository.getUsers();
 
-        emit(state.copyWith(
-          users: users,
-          loaded: true,
-        ));
+        emit(
+          state.copyWith(
+            allUsers: users,
+            filteredUsers: users,
+            loaded: true,
+          ),
+        );
       },
     );
 
-    on<SearchBarChanged>(
+    on<SearchBarTextChanged>(
       (event, emit) {
-        print(event.searchText);
-        emit(state.copyWith(
-            users: state.users
-                .where((user) =>
-                    user!.fullNameWithMiddle.contains(event.searchText))
-                .toList()));
+        emit(
+          state.copyWith(
+            filteredUsers: state.allUsers
+                .where(
+                  (user) => user!.searchData.toLowerCase().contains(event.text.toLowerCase()),
+                )
+                .toList(),
+          ),
+        );
       },
     );
   }

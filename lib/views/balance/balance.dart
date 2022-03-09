@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
+import 'package:nagib_pay/extensions/date_extension.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 import 'package:nagib_pay/widgets/data_card.dart';
 
 import '../../models/history_action.dart';
 import '../../models/user.dart';
+import '../../widgets/history_item.dart';
 
 class BalanceView extends StatefulWidget {
   const BalanceView({Key? key}) : super(key: key);
@@ -99,29 +101,7 @@ class _BalanceViewState extends State<BalanceView> {
                           (DocumentSnapshot document) {
                             HistoryAction data = HistoryAction.fromJson(
                                 document.data() as Map<String, dynamic>);
-                            return Card(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    Image(
-                                      height: 40,
-                                      width: 40,
-                                      image: AssetImage(data.imagePath),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      data.actionDescription,
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
+                            return HistoryItem(action: data);
                           },
                         ).toList(),
                       );

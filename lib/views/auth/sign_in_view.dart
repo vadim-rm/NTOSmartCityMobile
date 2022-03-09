@@ -38,10 +38,11 @@ class SignInView extends StatelessWidget {
 
   void _showAlertDialog(BuildContext context, String error) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomAlertDialog().fromError(context: context, error: error);
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialog().fromError(context: context, error: error);
+      },
+    );
   }
 
   Widget _loginForm() {

@@ -7,6 +7,8 @@ import 'package:nagib_pay/views/admin/users_view.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
 import 'package:nagib_pay/views/profile/profile.dart';
 
+import '../admin/history.dart';
+
 class NavigationView extends StatelessWidget {
   const NavigationView({Key? key}) : super(key: key);
 
@@ -31,6 +33,7 @@ class NavigationView extends StatelessWidget {
                         const ProfileView(),
                         if (userRole == "admin") ...[
                           const UsersView(),
+                          const HistoryView(),
                         ]
                       ],
                     ),
@@ -60,6 +63,10 @@ class NavigationView extends StatelessWidget {
                       const NavigationDestination(
                         icon: Icon(FeatherIcons.users),
                         label: "Все ебалы",
+                      ),
+                      const NavigationDestination(
+                        icon: Icon(FeatherIcons.list),
+                        label: "Движения ебалов",
                       )
                     ]
                   ],
