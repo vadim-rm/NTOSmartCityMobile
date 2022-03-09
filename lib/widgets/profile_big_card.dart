@@ -34,7 +34,9 @@ class ProfileBigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BalanceBloc(
-          user: user, adminRepository: context.read<AdminRepository>()),
+        user: user,
+        adminRepository: context.read<AdminRepository>(),
+      ),
       child: BlocBuilder<BalanceBloc, BalanceState>(
         builder: (context, state) {
           return BlocListener<BalanceBloc, BalanceState>(
@@ -96,7 +98,8 @@ class ProfileBigCard extends StatelessWidget {
                           onChanged: (balance) =>
                               context.read<BalanceBloc>().add(
                                     BalanceChanged(
-                                      balance: int.parse(balance.isEmpty ? "0" : balance),
+                                      balance: int.parse(
+                                          balance.isEmpty ? "0" : balance),
                                     ),
                                   ),
                           style:

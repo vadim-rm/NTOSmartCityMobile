@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
-import 'package:nagib_pay/extensions/date_extension.dart';
 import 'package:nagib_pay/repository/user_repository.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 import 'package:nagib_pay/widgets/data_card.dart';

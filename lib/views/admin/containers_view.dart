@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/bloc/containers/containers_bloc.dart';
 import 'package:nagib_pay/bloc/containers/containers_event.dart';
 import 'package:nagib_pay/bloc/containers/containers_state.dart';
+import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/repository/admin_repository.dart';
 import 'package:nagib_pay/views/admin/containers_details.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 import 'package:nagib_pay/widgets/container_item.dart';
+import 'package:nagib_pay/widgets/rounded_button.dart';
 
 class ContainersView extends StatelessWidget {
   const ContainersView({Key? key}) : super(key: key);
@@ -27,26 +29,42 @@ class ContainersView extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView(
-                  children: state.containers!
-                      .map(
-                        (con) => GestureDetector(
-                          child: ContainerItem(
-                            container: con,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ContainerDetails(container: con);
-                                },
-                              ),
-                            );
-                          },
+              child: ListView(children: [
+                ...state.containers!
+                    .map(
+                      (con) => GestureDetector(
+                        child: ContainerItem(
+                          container: con,
                         ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ContainerDetails(container: con);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                    .toList(),
+                const SizedBox(height: 20),
+
+                (state.formStatus is FormSubmitting)
+                    ? const RoundedButton(
+                        onPressed: null,
+                        text: "Блокируем станцию",
                       )
-                      .toList()),
+                    : RoundedButton(
+                        onPressed: () => context.read<ContainersBloc>().add(
+                              FormSubmitted(),
+                            ),
+                        text: (state.blocked
+                            ? "Разблокировать станцию"
+                            : "Заблокировать станцию"),
+                      ),
+              ]),
             );
           },
         ),

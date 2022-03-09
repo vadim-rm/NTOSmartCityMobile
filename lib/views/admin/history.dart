@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/bloc/history/history_bloc.dart';
@@ -8,7 +7,6 @@ import 'package:nagib_pay/repository/admin_repository.dart';
 import 'package:nagib_pay/views/admin/user_details.dart';
 import 'package:nagib_pay/widgets/custom_appbar.dart';
 
-import '../../models/history_action.dart';
 import '../../widgets/history_item.dart';
 
 class HistoryView extends StatelessWidget {

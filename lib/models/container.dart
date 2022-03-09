@@ -7,6 +7,7 @@ part 'container.g.dart';
 class TrashContainer {
   final String type;
   final int trashCounter;
+  final bool blocked;
   @JsonKey(ignore: true)
   final List<HistoryAction>? history;
   final String? id;
@@ -16,6 +17,7 @@ class TrashContainer {
     this.history,
     this.trashCounter = 0,
     this.id,
+    this.blocked = false,
   });
 
   TrashContainer copyWith({
@@ -23,12 +25,14 @@ class TrashContainer {
     List<HistoryAction>? history,
     int? trashCounter,
     String? id,
+    bool? blocked,
   }) {
     return TrashContainer(
       type: type ?? this.type,
       history: history ?? this.history,
       trashCounter: trashCounter ?? this.trashCounter,
       id: id ?? this.id,
+      blocked: blocked ?? this.blocked,
     );
   }
 
