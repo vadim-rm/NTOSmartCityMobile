@@ -20,7 +20,10 @@ class UserRepository {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     String? userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
-      throw Failure(ErrorCode.USER_NOT_LOGGED);
+      userID = (await FirebaseAuth.instance.authStateChanges().first)?.uid;
+      if (userID == null) {
+        throw Failure(ErrorCode.USER_NOT_LOGGED);
+      }
     }
     DocumentSnapshot snapshot = await users.doc(userID).get();
     if (snapshot.exists) {
