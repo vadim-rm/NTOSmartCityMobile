@@ -45,111 +45,116 @@ class BluetoothView extends StatelessWidget {
                   ),
                 );
               }
-              return ListView(
-                children: [
-                  Column(
+              return Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 600),
+                  child: ListView(
                     children: [
-                      if (isEditable) ...[
-                        RoundedButton(
-                          onPressed: () {
-                            context.read<StaffBloc>().add(CheckServo());
-                          },
-                          text: "Проверить сервоприводы",
-                        ),
-                      ],
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.servo,
-                        trashType: TrashType.paper,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.servo,
-                        trashType: TrashType.plastic,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.servo,
-                        trashType: TrashType.glass,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    children: [
-                      if (isEditable) ...[
-                        RoundedButton(
-                          onPressed: () {
-                            context.read<StaffBloc>().add(CheckServo());
-                          },
-                          text: "Проверить датчики цвета",
-                        ),
-                      ],
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.color,
-                        trashType: TrashType.paper,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.color,
-                        trashType: TrashType.plastic,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.color,
-                        trashType: TrashType.glass,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    children: [
-                      if (isEditable) ...[
-                        RoundedButton(
-                          onPressed: () {
-                            context.read<StaffBloc>().add(CheckServo());
-                          },
-                          text: "Проверить датчик расстояния",
-                        ),
-                      ],
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.distance,
-                        trashType: TrashType.paper,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.distance,
-                        trashType: TrashType.plastic,
-                      ),
-                      const CheckboxCard(
-                        sensorType: SensorType.distance,
-                        trashType: TrashType.glass,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  if (isEditable) ...[
-                    (state.formStatus is FormSubmitting)
-                        ? const RoundedButton(
-                            onPressed: null,
-                            text: "Отправляем отчет",
-                          )
-                        : RoundedButton(
-                            onPressed: () =>
-                                context.read<StaffBloc>().add(FormSubmitted()),
-                            text: "Отправить отчет",
+                      Column(
+                        children: [
+                          if (isEditable) ...[
+                            RoundedButton(
+                              onPressed: () {
+                                context.read<StaffBloc>().add(CheckServo());
+                              },
+                              text: "Проверить сервоприводы",
+                            ),
+                          ],
+                          const SizedBox(
+                            height: 20,
                           ),
-                  ],
-                ],
+                          const CheckboxCard(
+                            sensorType: SensorType.servo,
+                            trashType: TrashType.paper,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.servo,
+                            trashType: TrashType.plastic,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.servo,
+                            trashType: TrashType.glass,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          if (isEditable) ...[
+                            RoundedButton(
+                              onPressed: () {
+                                context.read<StaffBloc>().add(CheckServo());
+                              },
+                              text: "Проверить датчики цвета",
+                            ),
+                          ],
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.color,
+                            trashType: TrashType.paper,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.color,
+                            trashType: TrashType.plastic,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.color,
+                            trashType: TrashType.glass,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          if (isEditable) ...[
+                            RoundedButton(
+                              onPressed: () {
+                                context.read<StaffBloc>().add(CheckServo());
+                              },
+                              text: "Проверить датчик расстояния",
+                            ),
+                          ],
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.distance,
+                            trashType: TrashType.paper,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.distance,
+                            trashType: TrashType.plastic,
+                          ),
+                          const CheckboxCard(
+                            sensorType: SensorType.distance,
+                            trashType: TrashType.glass,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (isEditable) ...[
+                        (state.formStatus is FormSubmitting)
+                            ? const RoundedButton(
+                                onPressed: null,
+                                text: "Отправляем отчет",
+                              )
+                            : RoundedButton(
+                                onPressed: () =>
+                                    context.read<StaffBloc>().add(FormSubmitted()),
+                                text: "Отправить отчет",
+                              ),
+                      ],
+                    ],
+                  ),
+                ),
               );
             },
           ),

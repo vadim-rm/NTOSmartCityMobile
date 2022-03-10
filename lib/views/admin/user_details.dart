@@ -24,37 +24,42 @@ class UserDetailsView extends StatelessWidget {
       appBar: CustomAppBar(
         title: const Text("Информация о пользователе"),
       ),
-      body: ListView(
-        children: [
-          ProfileBigCard(user: user),
-          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: historyStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Что-пошло не так');
-              }
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: ListView(
+            children: [
+              ProfileBigCard(user: user),
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: historyStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Что-пошло не так');
+                  }
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: snapshot.data!.docs.map(
-                    (DocumentSnapshot document) {
-                      HistoryAction data = HistoryAction.fromJson(
-                          document.data() as Map<String, dynamic>);
-                      return HistoryItem(action: data);
-                    },
-                  ).toList(),
-                ),
-              );
-            },
-          )
-        ],
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: snapshot.data!.docs.map(
+                        (DocumentSnapshot document) {
+                          HistoryAction data = HistoryAction.fromJson(
+                              document.data() as Map<String, dynamic>);
+                          return HistoryItem(action: data);
+                        },
+                      ).toList(),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

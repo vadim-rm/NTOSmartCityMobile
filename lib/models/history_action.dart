@@ -47,6 +47,18 @@ class HistoryAction {
 
   Map<String, dynamic> toJson() => _$HistoryActionToJson(this);
 
+  String get itemDescription {
+    switch (userId) {
+      case "1":
+        return "Стекло";
+      case "2":
+        return "Пластик";
+      case "3":
+        return "Бумага";
+    }
+    return "";
+  }
+
   String get actionDescription {
     switch (action) {
       case "balance_increase":
@@ -58,7 +70,7 @@ class HistoryAction {
       case "service":
         return "Мусорный бак переведен в режим обслуживания";
       case "overfill":
-        return "Мусорный бак переполнен";
+        return "Мусорный бак переполнен: $itemDescription";
       case "login":
         return "Вход на мусорном баке";
       case "report_created":

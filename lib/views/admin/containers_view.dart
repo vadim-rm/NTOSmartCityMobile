@@ -29,76 +29,81 @@ class ContainersView extends StatelessWidget {
             if (!state.loaded) {
               return const Center(child: CircularProgressIndicator());
             }
-            return RefreshIndicator(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListView(children: [
-                    ...state.containers!
-                        .map(
-                          (con) => GestureDetector(
-                            child: ContainerItem(
-                              container: con,
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ContainerDetails(container: con);
-                                  },
+            return Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: RefreshIndicator(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ListView(children: [
+                        ...state.containers!
+                            .map(
+                              (con) => GestureDetector(
+                                child: ContainerItem(
+                                  container: con,
                                 ),
-                              );
-                            },
-                          ),
-                        )
-                        .toList(),
-                    const SizedBox(height: 20),
-                    (state.formStatus is FormSubmitting)
-                        ? const RoundedButton(
-                            onPressed: null,
-                            text: "Блокируем станцию",
-                          )
-                        : RoundedButton(
-                            onPressed: () => context.read<ContainersBloc>().add(
-                                  FormSubmitted(),
-                                ),
-                            text: (state.blocked
-                                ? "Разблокировать станцию"
-                                : "Заблокировать станцию"),
-                          ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ...state.reports
-                        .map(
-                          (report) => GestureDetector(
-                            child: HistoryItem(
-                              action: HistoryAction(
-                                action: "report_created",
-                                type: "trash",
-                                date: report.date!,
-                                amount: 1,
-                                userId: "1",
-                              ),
-                            ),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return BluetoothView(
-                                    isEditable: false,
-                                    trashReport: report,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ContainerDetails(container: con);
+                                      },
+                                    ),
                                   );
                                 },
                               ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ]),
-                ),
-                onRefresh: () async =>
-                    context.read<ContainersBloc>().add(Init()));
+                            )
+                            .toList(),
+                        const SizedBox(height: 20),
+                        (state.formStatus is FormSubmitting)
+                            ? const RoundedButton(
+                                onPressed: null,
+                                text: "Блокируем станцию",
+                              )
+                            : RoundedButton(
+                                onPressed: () => context.read<ContainersBloc>().add(
+                                      FormSubmitted(),
+                                    ),
+                                text: (state.blocked
+                                    ? "Разблокировать станцию"
+                                    : "Заблокировать станцию"),
+                              ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ...state.reports
+                            .map(
+                              (report) => GestureDetector(
+                                child: HistoryItem(
+                                  action: HistoryAction(
+                                    action: "report_created",
+                                    type: "trash",
+                                    date: report.date!,
+                                    amount: 1,
+                                    userId: "1",
+                                  ),
+                                ),
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return BluetoothView(
+                                        isEditable: false,
+                                        trashReport: report,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ]),
+                    ),
+                    onRefresh: () async =>
+                        context.read<ContainersBloc>().add(Init())),
+              ),
+            );
           },
         ),
       ),

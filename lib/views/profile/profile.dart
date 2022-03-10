@@ -33,47 +33,50 @@ class ProfileView extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8,
-        ),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            StreamBuilder<DocumentSnapshot>(
-              stream: userStream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return const Text('Что-пошло не так');
-                }
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8,
+          ),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              StreamBuilder<DocumentSnapshot>(
+                stream: userStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Что-пошло не так');
+                  }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                User newUser = User.fromJson(
-                    snapshot.data!.data() as Map<String, dynamic>);
-                sessionCubit.setUser(user: newUser);
+                  User newUser = User.fromJson(
+                      snapshot.data!.data() as Map<String, dynamic>);
+                  sessionCubit.setUser(user: newUser);
 
-                return ListView(
-                  children: [
-                    ProfileCard(
-                      user: newUser,
-                      showRole: true,
-                    ),
-                  ],
-                );
-              },
-            ),
-            RoundedButton(
-              text: "Выйти",
-              onPressed: () async {
-                context.read<SessionCubit>().signOut();
-              },
-            )
-          ],
+                  return ListView(
+                    children: [
+                      ProfileCard(
+                        user: newUser,
+                        showRole: true,
+                      ),
+                    ],
+                  );
+                },
+              ),
+              RoundedButton(
+                text: "Выйти",
+                onPressed: () async {
+                  context.read<SessionCubit>().signOut();
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

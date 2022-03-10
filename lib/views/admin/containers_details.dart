@@ -26,37 +26,44 @@ class ContainerDetails extends StatelessWidget {
       appBar: CustomAppBar(
         title: const Text("История контейнера"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            CardWithTitle(title: "ID", body: Text(container.id.toString())),
-            CardWithTitle(title: "Тип", body: Text(container.typeDescription)),
-            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: containerHistoryStream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.hasError) {
-                  return const Text('Что-пошло не так');
-                }
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                CardWithTitle(title: "ID", body: Text(container.id.toString())),
+                CardWithTitle(
+                    title: "Тип", body: Text(container.typeDescription)),
+                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: containerHistoryStream,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Что-пошло не так');
+                    }
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: snapshot.data!.docs.map(
-                    (DocumentSnapshot document) {
-                      HistoryAction data = HistoryAction.fromJson(
-                          document.data() as Map<String, dynamic>);
-                      return HistoryItem(action: data);
-                    },
-                  ).toList(),
-                );
-              },
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: snapshot.data!.docs.map(
+                        (DocumentSnapshot document) {
+                          HistoryAction data = HistoryAction.fromJson(
+                              document.data() as Map<String, dynamic>);
+                          return HistoryItem(action: data);
+                        },
+                      ).toList(),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

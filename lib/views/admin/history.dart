@@ -27,36 +27,41 @@ class HistoryView extends StatelessWidget {
             if (!state.loaded) {
               return const Center(child: CircularProgressIndicator());
             }
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: RefreshIndicator(
-                  child: ListView(
-                    children: state.history!
-                        .map(
-                          (his) => GestureDetector(
-                            child: HistoryItem(action: his),
-                            onTap: () => {
-                              if (his.type == "user")
-                                {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return UserDetailsView(
-                                          user: his.user!,
-                                        );
-                                      },
-                                    ),
-                                  ).then((_) =>
-                                      context.read<HistoryBloc>().add(Init()))
+            return Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: RefreshIndicator(
+                      child: ListView(
+                        children: state.history!
+                            .map(
+                              (his) => GestureDetector(
+                                child: HistoryItem(action: his),
+                                onTap: () => {
+                                  if (his.type == "user")
+                                    {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return UserDetailsView(
+                                              user: his.user!,
+                                            );
+                                          },
+                                        ),
+                                      ).then((_) =>
+                                          context.read<HistoryBloc>().add(Init()))
+                                    },
                                 },
-                            },
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  onRefresh: () async =>
-                      context.read<HistoryBloc>().add(Init())),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      onRefresh: () async =>
+                          context.read<HistoryBloc>().add(Init())),
+                ),
+              ),
             );
           },
         ),

@@ -17,6 +17,7 @@ class NavigationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isExtendedUI = MediaQuery.of(context).size.width > 700;
     String userRole = context.read<SessionCubit>().user!.role;
 
     return BlocProvider(
@@ -26,6 +27,42 @@ class NavigationView extends StatelessWidget {
           return Scaffold(
             body: Row(
               children: <Widget>[
+                if (isExtendedUI) ...[
+                  NavigationRail(
+                    selectedIndex: currentIndex,
+                    onDestinationSelected: (int index) =>
+                        context.read<BottomNavigationCubit>().selectTab(index),
+                    labelType: NavigationRailLabelType.all,
+                    selectedLabelTextStyle: const TextStyle(fontSize: 12),
+                    unselectedLabelTextStyle: const TextStyle(fontSize: 12),
+                    useIndicator: true,
+                    destinations: <NavigationRailDestination>[
+                      NavigationRailDestination(
+                        icon: const Icon(FeatherIcons.creditCard),
+                        label: Container(),
+                      ),
+                       NavigationRailDestination(
+                        icon: const Icon(FeatherIcons.user),
+                        label: Container(),
+                      ),
+                      if (userRole == "admin") ...[
+                         NavigationRailDestination(
+                          icon: const Icon(FeatherIcons.users),
+                          label: Container(),
+                        ),
+                         NavigationRailDestination(
+                          icon: const Icon(FeatherIcons.list),
+                          label: Container(),
+                        ),
+                         NavigationRailDestination(
+                          icon: const Icon(FeatherIcons.trash),
+                          label: Container(),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const VerticalDivider(thickness: 1, width: 1),
+                ],
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -48,7 +85,7 @@ class NavigationView extends StatelessWidget {
                 ),
               ],
             ),
-            bottomNavigationBar: Column(
+            bottomNavigationBar: !isExtendedUI ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 NavigationBar(
@@ -89,7 +126,7 @@ class NavigationView extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
+            ) : null,
           );
         },
       ),
