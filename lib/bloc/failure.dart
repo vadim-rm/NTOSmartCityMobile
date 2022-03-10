@@ -9,6 +9,7 @@ enum ErrorCode {
   INVALID_EMAIL,
   USER_NOT_CREATED,
   INTERNAL,
+  BLUETOOTH_ERROR,
 }
 
 class Failure {

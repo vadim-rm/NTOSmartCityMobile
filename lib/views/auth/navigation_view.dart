@@ -37,9 +37,10 @@ class NavigationView extends StatelessWidget {
                           const UsersView(),
                           const HistoryView(),
                           const ContainersView(),
-                        ] else if (userRole == "staff") ...[
-                          const BluetoothView(),
                         ],
+                        // else if (userRole == "staff") ...[
+                          const BluetoothView(),
+                        // ],
                       ],
                     ),
                   ),
@@ -77,12 +78,13 @@ class NavigationView extends StatelessWidget {
                         icon: Icon(FeatherIcons.trash),
                         label: "Состояние ебал",
                       ),
-                    ] else if (userRole == "staff") ...[
+                    ],
+                    // else if (userRole == "staff") ...[
                       const NavigationDestination(
-                        icon: Icon(FeatherIcons.trash),
+                        icon: Icon(FeatherIcons.bluetooth),
                         label: "Проверка станции",
                       ),
-                    ],
+                    // ],
                   ],
                 ),
               ],

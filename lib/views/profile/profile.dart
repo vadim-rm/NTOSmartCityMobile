@@ -59,7 +59,10 @@ class ProfileView extends StatelessWidget {
 
                 return ListView(
                   children: [
-                    ProfileCard(user: newUser, showRole: true,),
+                    ProfileCard(
+                      user: newUser,
+                      showRole: true,
+                    ),
                   ],
                 );
               },
