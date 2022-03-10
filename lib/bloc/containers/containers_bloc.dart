@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nagib_pay/bloc/containers/containers_event.dart';
 import 'package:nagib_pay/bloc/containers/containers_state.dart';
 import 'package:nagib_pay/models/container.dart';
+import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/repository/admin_repository.dart';
 
 import '../failure.dart';
@@ -17,12 +18,13 @@ class ContainersBloc extends Bloc<ContainersEvent, ContainersState> {
     on<Init>(
       (event, emit) async {
         List<TrashContainer> containers = await adminRepository.getContainers();
-
+        List<TrashReport> reports = await adminRepository.getReports();
         emit(
           state.copyWith(
             containers: containers,
             loaded: true,
             blocked: containers[0].blocked,
+            reports: reports,
           ),
         );
       },

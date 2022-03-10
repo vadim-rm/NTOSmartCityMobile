@@ -4,16 +4,22 @@ import 'package:nagib_pay/bloc/failure.dart';
 import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/bloc/staff/staff_event.dart';
 import 'package:nagib_pay/bloc/staff/staff_state.dart';
+import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/repository/staff_repository.dart';
 import 'package:nagib_pay/types/sensors_types.dart';
 import 'package:nagib_pay/types/trash_types.dart';
 
 class StaffBloc extends Bloc<StaffEvent, StaffState> {
   final StaffRepository staffRepository;
-
+  final TrashReport? trashReport;
+  final bool isEditable;
   StaffBloc({
     required this.staffRepository,
-  }) : super(StaffState()) {
+    this.trashReport,
+    this.isEditable = false,
+  }) : super(StaffState(
+            trashReport: trashReport ?? const TrashReport(),
+            isEditable: isEditable)) {
     on<ConnectBluetooth>(
       (event, emit) async {
         bool isConnected = await staffRepository.connectBluetooth();
@@ -41,17 +47,33 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
 
     on<ChangedCheckbox>(
       (event, emit) {
-        Map<SensorType, Map<TrashType, bool>> newSensorsStatus = {
-          ...state.sensorsStatus
-        };
-        newSensorsStatus[event.sensorType] =
-            Map.of(state.sensorsStatus[event.sensorType]!);
+        Map<SensorType, Map<TrashType, bool>> newStatus =
+            Map.of(state.trashReport.status);
 
-        newSensorsStatus[event.sensorType]![event.trashType] =
-            !newSensorsStatus[event.sensorType]![event.trashType]!;
-        emit(state.copyWith(
-          sensorsStatus: newSensorsStatus,
-        ));
+        newStatus[event.sensorType] = Map.of(newStatus[event.sensorType]!);
+
+        newStatus[event.sensorType]![event.trashType] =
+            !newStatus[event.sensorType]![event.trashType]!;
+
+        emit(
+          state.copyWith(
+            trashReport: state.trashReport.copyWith(
+              status: newStatus,
+            ),
+          ),
+        );
+        // Map<SensorType, Map<TrashType, bool>> newSensorsStatus = {
+        //   ...state.sensorsStatus
+        // };
+        // newSensorsStatus[event.sensorType] =
+        //     Map.of(state.sensorsStatus[event.sensorType]!);
+
+        // newSensorsStatus[event.sensorType]![event.trashType] =
+        //     !newSensorsStatus[event.sensorType]![event.trashType]!;
+        // emit(state.copyWith(
+        //   sensorsStatus: newSensorsStatus,
+        // );
+        // );
       },
     );
 
@@ -63,7 +85,7 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
               formStatus: FormSubmitting(),
             ),
           );
-          await staffRepository.sendReport(state.sensorsStatus);
+          await staffRepository.sendReport(state.trashReport);
           emit(
             state.copyWith(
               formStatus: SubmissionSuccess(),

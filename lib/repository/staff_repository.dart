@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:nagib_pay/models/history_action.dart';
+import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/types/sensors_types.dart';
 import 'package:nagib_pay/types/trash_types.dart';
 
@@ -71,23 +72,12 @@ class StaffRepository {
     await targetCharacteristic!.write(bytes, withoutResponse: false);
   }
 
-  Future<void> sendReport(
-      Map<SensorType, Map<TrashType, bool>> sensorsStatus) async {
+  Future<void> sendReport(TrashReport trashReport) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     CollectionReference reports = firestore.collection('reports');
 
-    Map<String, Map<String, bool>> firebaseReports = {};
-    sensorsStatus.forEach((sensorType, trashStatus) {
-      print(sensorType);
-      trashStatus.forEach((trashType, isOk) {
-        firebaseReports[sensorType.getString()] = {
-          ...?firebaseReports[sensorType.getString()],
-          trashType.getString(): isOk
-        };
-      });
-    });
-    await reports.add(firebaseReports);
+    await reports.add(trashReport.copyWith(date: DateTime.now()).toJson());
     // HistoryAction action = HistoryAction(
     // action: balance > user.balance ? "balance_increase" : "buy",
     // amount: (user.balance - balance).abs(),

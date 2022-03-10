@@ -182,6 +182,10 @@ flutter_bloc
 2.12
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.0.1/
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_bloc-8.0.1/lib/
+flutter_blue
+2.12
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blue-0.8.0/
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blue-0.8.0/lib/
 flutter_blurhash
 2.12
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blurhash-0.6.4/
@@ -346,6 +350,10 @@ process
 2.14
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.4/
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.4/lib/
+protobuf
+2.12
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/protobuf-2.0.1/
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/protobuf-2.0.1/lib/
 provider
 2.12
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.2/
@@ -360,8 +368,8 @@ file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/pubspec_pa
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/pubspec_parse-1.2.0/lib/
 rxdart
 2.12
-file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.3/
-file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.3/lib/
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/
+file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/lib/
 shelf
 2.12
 file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/shelf-1.2.0/

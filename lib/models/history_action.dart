@@ -15,13 +15,14 @@ class HistoryAction {
   @JsonKey(ignore: true)
   final User? user;
 
-  HistoryAction(
-      {required this.type,
-      required this.action,
-      required this.date,
-      required this.amount,
-      required this.userId,
-      this.user,});
+  HistoryAction({
+    required this.type,
+    required this.action,
+    required this.date,
+    required this.amount,
+    required this.userId,
+    this.user,
+  });
 
   HistoryAction copyWith({
     String? type,
@@ -60,6 +61,8 @@ class HistoryAction {
         return "Мусорный бак переполнен";
       case "login":
         return "Вход на мусорном баке";
+      case "report_created":
+        return "Создан новый отчет";
       default:
         return "Действие";
     }
@@ -76,6 +79,8 @@ class HistoryAction {
       case "overfill":
       case "login":
         return "assets/basket.png";
+      case "report_created":
+        return "assets/wrench.png";
     }
     return "assets/dollar.png";
   }

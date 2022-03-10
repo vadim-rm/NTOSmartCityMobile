@@ -32,11 +32,22 @@ class CheckboxCard extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
             trailing: Checkbox(
-              value: state.sensorsStatus[sensorType]![trashType],
+              value: state.trashReport.status[sensorType]![trashType],
               onChanged: (_) {
-                context.read<StaffBloc>().add(ChangedCheckbox(
-                    sensorType: sensorType, trashType: trashType));
+                if (state.isEditable) {
+                  context.read<StaffBloc>().add(ChangedCheckbox(
+                      sensorType: sensorType, trashType: trashType));
+                }
               },
+              activeColor: Colors.green,
+              fillColor: MaterialStateProperty.resolveWith(
+                (state) {
+                  if (state.contains(MaterialState.selected)) {
+                    return Colors.green;
+                  }
+                  return Colors.red;
+                },
+              ),
             ),
           ),
         );

@@ -278,6 +278,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_blue",
+      "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blue-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_blurhash",
       "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blurhash-0.6.4",
       "packageUri": "lib/",
@@ -536,6 +542,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "protobuf",
+      "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/protobuf-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "provider",
       "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/provider-6.0.2",
       "packageUri": "lib/",
@@ -555,7 +567,7 @@
     },
     {
       "name": "rxdart",
-      "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.3",
+      "rootUri": "file:///Users/katsushooter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -710,7 +722,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-03-09T08:17:23.474828Z",
+  "generated": "2022-03-10T06:33:11.931216Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

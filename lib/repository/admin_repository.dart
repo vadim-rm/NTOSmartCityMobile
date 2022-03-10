@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nagib_pay/models/container.dart';
+import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/models/user.dart';
 
 import '../models/history_action.dart';
@@ -7,22 +8,21 @@ import '../models/history_action.dart';
 class AdminRepository {
   Future<List<User?>> getUsers({bool showAdmin = false}) async {
     CollectionReference<Map<String, dynamic>> usersCollection =
-    FirebaseFirestore.instance.collection('users');
+        FirebaseFirestore.instance.collection('users');
     QuerySnapshot<Map<String, dynamic>> usersSnapshot;
     if (!showAdmin) {
       usersSnapshot =
-      await usersCollection.where("role", isNotEqualTo: "admin").get();
+          await usersCollection.where("role", isNotEqualTo: "admin").get();
     } else {
       usersSnapshot = await usersCollection.get();
     }
 
     List<User?> users = usersSnapshot.docs
         .map(
-          (firebaseUser) =>
-          User.fromJson(firebaseUser.data()).copyWith(
+          (firebaseUser) => User.fromJson(firebaseUser.data()).copyWith(
             id: firebaseUser.id,
           ),
-    )
+        )
         .toList();
     // List<QueryDocumentSnapshot<Map<String, dynamic>>>
     return users;
@@ -55,17 +55,16 @@ class AdminRepository {
     Map<String, User> users = {for (var e in usersList) e!.id!: e};
 
     QuerySnapshot<Map<String, dynamic>> historySnapshot =
-    await FirebaseFirestore.instance
-        .collection('history')
-        .orderBy('date', descending: true)
-        .get();
+        await FirebaseFirestore.instance
+            .collection('history')
+            .orderBy('date', descending: true)
+            .get();
 
     List<HistoryAction> history = historySnapshot.docs
         .map<HistoryAction>(
-            (his) =>
-            HistoryAction.fromJson(his.data()).copyWith(
-              user: users[his.data()["userId"]],
-            ))
+            (his) => HistoryAction.fromJson(his.data()).copyWith(
+                  user: users[his.data()["userId"]],
+                ))
         .toList();
 
     return history;
@@ -73,14 +72,25 @@ class AdminRepository {
 
   Future<List<TrashContainer>> getContainers() async {
     QuerySnapshot<Map<String, dynamic>> containersSnapshot =
-    await FirebaseFirestore.instance.collection('containers').get();
+        await FirebaseFirestore.instance.collection('containers').get();
 
     List<TrashContainer> containers = containersSnapshot.docs
         .map(
-          (container) =>
-          TrashContainer.fromJson(container.data())
+          (container) => TrashContainer.fromJson(container.data())
               .copyWith(id: container.id),
-    )
+        )
+        .toList();
+    return containers;
+  }
+
+  Future<List<TrashReport>> getReports() async {
+    QuerySnapshot<Map<String, dynamic>> reportsSnapshot =
+        await FirebaseFirestore.instance.collection('reports').get();
+
+    List<TrashReport> containers = reportsSnapshot.docs
+        .map(
+          (report) => TrashReport.fromJson(report.data()),
+        )
         .toList();
     return containers;
   }
@@ -95,11 +105,8 @@ class AdminRepository {
   }
 
   Future<void> blockStation(bool blocked) {
-    CollectionReference containers = FirebaseFirestore.instance.collection(
-        'containers');
-    return containers
-        .doc('1')
-        .update({'blocked': blocked});
+    CollectionReference containers =
+        FirebaseFirestore.instance.collection('containers');
+    return containers.doc('1').update({'blocked': blocked});
   }
-
 }

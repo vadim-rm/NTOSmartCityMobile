@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nagib_pay/bloc/bottom_navigation/bottom_navigation_cubit.dart';
 import 'package:nagib_pay/bloc/session/session_cubit.dart';
+import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/views/admin/containers_view.dart';
 import 'package:nagib_pay/views/admin/users_view.dart';
 import 'package:nagib_pay/views/balance/balance.dart';
@@ -39,7 +40,7 @@ class NavigationView extends StatelessWidget {
                           const ContainersView(),
                         ],
                         // else if (userRole == "staff") ...[
-                          const BluetoothView(),
+                        const BluetoothView(),
                         // ],
                       ],
                     ),
@@ -80,10 +81,10 @@ class NavigationView extends StatelessWidget {
                       ),
                     ],
                     // else if (userRole == "staff") ...[
-                      const NavigationDestination(
-                        icon: Icon(FeatherIcons.bluetooth),
-                        label: "Проверка станции",
-                      ),
+                    const NavigationDestination(
+                      icon: Icon(FeatherIcons.bluetooth),
+                      label: "Проверка станции",
+                    ),
                     // ],
                   ],
                 ),
