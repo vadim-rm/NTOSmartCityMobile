@@ -28,12 +28,11 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
             isEditable: isEditable,
           ),
         ) {
-
     void onConnectionChanged(String deviceId, BlueConnectionState state) {
       print('_handleConnectionChange $deviceId, ${state.value}');
     }
-    void onCharacteristicsChange(
 
+    void onCharacteristicsChange(
         String deviceId, String characteristicId, Uint8List value) {
       print('_handleValueChange $deviceId, $characteristicId, $value');
       print(String.fromCharCodes(value));
@@ -66,12 +65,14 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
             newStatus[SensorType.color]![TrashType.glass] = true;
             break;
         }
+        add(UpdateStatus(newStatus: newStatus));
       }
     }
 
     on<ConnectBluetooth>(
       (event, emit) async {
-        await staffRepository.connectBluetooth(onCharacteristicsChange, onConnectionChanged);
+        await staffRepository.connectBluetooth(
+            onCharacteristicsChange, onConnectionChanged);
         emit(state.copyWith(
           isConnected: true,
         ));
@@ -129,5 +130,13 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
         }
       },
     );
+
+    on<UpdateStatus>((event, emit) {
+      emit(
+        state.copyWith(
+          trashReport: state.trashReport.copyWith(status: event.newStatus),
+        ),
+      );
+    });
   }
 }
