@@ -56,11 +56,11 @@ class NavigationView extends StatelessWidget {
                           icon: const Icon(FeatherIcons.trash),
                           label: Container(),
                         ),
-                        NavigationRailDestination(
-                          icon: const Icon(FeatherIcons.user),
-                          label: Container(),
-                        ),
                       ],
+                      NavigationRailDestination(
+                        icon: const Icon(FeatherIcons.user),
+                        label: Container(),
+                      ),
                     ],
                   ),
                   const VerticalDivider(thickness: 1, width: 1),
