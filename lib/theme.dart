@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,6 +6,7 @@ final ThemeData nagibTheme = ThemeData(
     primarySwatch: Colors.blue,
     useMaterial3: true,
     splashColor: Colors.transparent,
+    platform: !kIsWeb ? TargetPlatform.iOS : null,
     appBarTheme:
         const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
     elevatedButtonTheme: ElevatedButtonThemeData(
