@@ -7,6 +7,7 @@ import 'package:quick_blue/quick_blue.dart';
 
 class StaffRepository {
   String? arduinoId;
+
   Future<void> connectBluetooth(
     void Function(String, String, Uint8List)? onCharacteristicChange,
     void Function(String deviceId, BlueConnectionState state)
@@ -21,7 +22,6 @@ class StaffRepository {
     //   //code for handling error
     // });
 
-
     QuickBlue.startScan();
     BlueScanResult arduino = await QuickBlue.scanResultStream
         .firstWhere((res) => res.deviceId == arduinoUUID);
@@ -33,6 +33,7 @@ class StaffRepository {
     QuickBlue.setValueHandler(onCharacteristicChange);
     QuickBlue.setConnectionHandler(onConnectionChange);
   }
+
   Future<void> checkServo() async {
     print("ARDUINO ID");
     print(arduinoId);

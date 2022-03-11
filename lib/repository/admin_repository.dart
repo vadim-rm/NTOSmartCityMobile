@@ -85,7 +85,10 @@ class AdminRepository {
 
   Future<List<TrashReport>> getReports() async {
     QuerySnapshot<Map<String, dynamic>> reportsSnapshot =
-        await FirebaseFirestore.instance.collection('reports').get();
+        await FirebaseFirestore.instance
+            .collection('reports')
+            .orderBy('date', descending: true)
+            .get();
 
     List<TrashReport> containers = reportsSnapshot.docs
         .map(
