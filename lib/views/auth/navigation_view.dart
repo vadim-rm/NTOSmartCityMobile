@@ -43,10 +43,6 @@ class NavigationView extends StatelessWidget {
                           label: Container(),
                         ),
                       ],
-                      NavigationRailDestination(
-                        icon: const Icon(FeatherIcons.user),
-                        label: Container(),
-                      ),
                       if (userRole == "admin") ...[
                         NavigationRailDestination(
                           icon: const Icon(FeatherIcons.users),
@@ -58,6 +54,10 @@ class NavigationView extends StatelessWidget {
                         ),
                         NavigationRailDestination(
                           icon: const Icon(FeatherIcons.trash),
+                          label: Container(),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(FeatherIcons.user),
                           label: Container(),
                         ),
                       ],
@@ -74,7 +74,6 @@ class NavigationView extends StatelessWidget {
                         if (userRole == "user") ...[
                           const BalanceView(),
                         ],
-                        const ProfileView(),
                         if (userRole == "admin") ...[
                           const UsersView(),
                           const HistoryView(),
@@ -82,6 +81,7 @@ class NavigationView extends StatelessWidget {
                         ] else if (userRole == "staff") ...[
                           const BluetoothView(),
                         ],
+                        const ProfileView(),
                       ],
                     ),
                   ),
@@ -107,10 +107,6 @@ class NavigationView extends StatelessWidget {
                               label: "Мои Е-баллы",
                             ),
                           ],
-                          const NavigationDestination(
-                            icon: Icon(FeatherIcons.user),
-                            label: "Моё ебало",
-                          ),
                           if (userRole == "admin") ...[
                             const NavigationDestination(
                               icon: Icon(FeatherIcons.users),
@@ -130,6 +126,10 @@ class NavigationView extends StatelessWidget {
                               label: "Проверка станции",
                             ),
                           ],
+                          const NavigationDestination(
+                            icon: Icon(FeatherIcons.user),
+                            label: "Моё ебало",
+                          ),
                         ],
                       ),
                     ],
