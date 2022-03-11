@@ -37,24 +37,26 @@ class NavigationView extends StatelessWidget {
                     unselectedLabelTextStyle: const TextStyle(fontSize: 12),
                     useIndicator: true,
                     destinations: <NavigationRailDestination>[
+                      if (userRole == "user") ...[
+                        NavigationRailDestination(
+                          icon: const Icon(FeatherIcons.creditCard),
+                          label: Container(),
+                        ),
+                      ],
                       NavigationRailDestination(
-                        icon: const Icon(FeatherIcons.creditCard),
-                        label: Container(),
-                      ),
-                       NavigationRailDestination(
                         icon: const Icon(FeatherIcons.user),
                         label: Container(),
                       ),
                       if (userRole == "admin") ...[
-                         NavigationRailDestination(
+                        NavigationRailDestination(
                           icon: const Icon(FeatherIcons.users),
                           label: Container(),
                         ),
-                         NavigationRailDestination(
+                        NavigationRailDestination(
                           icon: const Icon(FeatherIcons.list),
                           label: Container(),
                         ),
-                         NavigationRailDestination(
+                        NavigationRailDestination(
                           icon: const Icon(FeatherIcons.trash),
                           label: Container(),
                         ),
@@ -69,64 +71,70 @@ class NavigationView extends StatelessWidget {
                     child: IndexedStack(
                       index: currentIndex,
                       children: [
-                        const BalanceView(),
+                        if (userRole == "user") ...[
+                          const BalanceView(),
+                        ],
                         const ProfileView(),
                         if (userRole == "admin") ...[
                           const UsersView(),
                           const HistoryView(),
                           const ContainersView(),
+                        ] else if (userRole == "staff") ...[
+                          const BluetoothView(),
                         ],
-                        // else if (userRole == "staff") ...[
-                        const BluetoothView(),
-                        // ],
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-            bottomNavigationBar: !isExtendedUI ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                NavigationBar(
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                  height: 60,
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: (index) =>
-                      context.read<BottomNavigationCubit>().selectTab(index),
-                  destinations: [
-                    const NavigationDestination(
-                      icon: Icon(FeatherIcons.creditCard),
-                      label: "Мои Е-баллы",
-                    ),
-                    const NavigationDestination(
-                      icon: Icon(FeatherIcons.user),
-                      label: "Моё ебало",
-                    ),
-                    if (userRole == "admin") ...[
-                      const NavigationDestination(
-                        icon: Icon(FeatherIcons.users),
-                        label: "Все ебалы",
-                      ),
-                      const NavigationDestination(
-                        icon: Icon(FeatherIcons.list),
-                        label: "Движения ебалов",
-                      ),
-                      const NavigationDestination(
-                        icon: Icon(FeatherIcons.trash),
-                        label: "Состояние ебал",
+            bottomNavigationBar: !isExtendedUI
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      NavigationBar(
+                        labelBehavior:
+                            NavigationDestinationLabelBehavior.alwaysHide,
+                        height: 60,
+                        selectedIndex: currentIndex,
+                        onDestinationSelected: (index) => context
+                            .read<BottomNavigationCubit>()
+                            .selectTab(index),
+                        destinations: [
+                          if (userRole == "user") ...[
+                            const NavigationDestination(
+                              icon: Icon(FeatherIcons.creditCard),
+                              label: "Мои Е-баллы",
+                            ),
+                          ],
+                          const NavigationDestination(
+                            icon: Icon(FeatherIcons.user),
+                            label: "Моё ебало",
+                          ),
+                          if (userRole == "admin") ...[
+                            const NavigationDestination(
+                              icon: Icon(FeatherIcons.users),
+                              label: "Все ебалы",
+                            ),
+                            const NavigationDestination(
+                              icon: Icon(FeatherIcons.list),
+                              label: "Движения ебалов",
+                            ),
+                            const NavigationDestination(
+                              icon: Icon(FeatherIcons.trash),
+                              label: "Состояние ебал",
+                            ),
+                          ] else if (userRole == "staff") ...[
+                            const NavigationDestination(
+                              icon: Icon(FeatherIcons.bluetooth),
+                              label: "Проверка станции",
+                            ),
+                          ],
+                        ],
                       ),
                     ],
-                    // else if (userRole == "staff") ...[
-                    const NavigationDestination(
-                      icon: Icon(FeatherIcons.bluetooth),
-                      label: "Проверка станции",
-                    ),
-                    // ],
-                  ],
-                ),
-              ],
-            ) : null,
+                  )
+                : null,
           );
         },
       ),
