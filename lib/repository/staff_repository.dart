@@ -4,10 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nagib_pay/extensions/bluetooth_constants.dart';
 import 'package:nagib_pay/models/trash_report.dart';
 import 'package:quick_blue/quick_blue.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class StaffRepository {
-  final flutterReactiveBle = FlutterReactiveBle();
   String? arduinoId;
   Future<void> connectBluetooth(
     void Function(String, String, Uint8List)? onCharacteristicChange,
