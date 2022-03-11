@@ -25,6 +25,7 @@ class StaffRepository {
     QuickBlue.startScan();
     BlueScanResult arduino = await QuickBlue.scanResultStream
         .firstWhere((res) => res.deviceId == arduinoUUID);
+    print(arduino.deviceId);
     QuickBlue.stopScan();
     QuickBlue.connect(arduino.deviceId);
     arduinoId = arduino.deviceId;

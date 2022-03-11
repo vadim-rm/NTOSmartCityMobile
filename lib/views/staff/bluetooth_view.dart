@@ -36,43 +36,43 @@ class BluetoothView extends StatelessWidget {
           ),
           child: BlocBuilder<StaffBloc, StaffState>(
             builder: (context, state) {
-              if (!state.isConnected && isEditable) {
-                return Center(
-                  child: RoundedButton(
-                    onPressed: () {
-                      context.read<StaffBloc>().add(ConnectBluetooth());
-                    },
-                    text: "Подключиться к станции",
-                  ),
-                );
-              }
+              // if (!state.isConnected && isEditable) {
+              //   return Center(
+              //     child: RoundedButton(
+              //       onPressed: () {
+              //         context.read<StaffBloc>().add(ConnectBluetooth());
+              //       },
+              //       text: "Подключиться к станции",
+              //     ),
+              //   );
+              // }
               return Center(
                 child: Container(
                   constraints: const BoxConstraints(maxWidth: 600),
                   child: ListView(
                     children: [
                       Column(
-                        children: [
-                          if (isEditable) ...[
-                            RoundedButton(
-                              onPressed: () {
-                                context.read<StaffBloc>().add(CheckServo());
-                              },
-                              text: "Проверить сервоприводы",
-                            ),
-                          ],
-                          const SizedBox(
+                        children: const [
+                          // if (isEditable) ...[
+                          //   RoundedButton(
+                          //     onPressed: () {
+                          //       context.read<StaffBloc>().add(CheckServo());
+                          //     },
+                          //     text: "Проверить сервоприводы",
+                          //   ),
+                          // ],
+                          SizedBox(
                             height: 20,
                           ),
-                          const CheckboxCard(
+                          CheckboxCard(
                             sensorType: SensorType.servo,
                             trashType: TrashType.paper,
                           ),
-                          const CheckboxCard(
+                          CheckboxCard(
                             sensorType: SensorType.servo,
                             trashType: TrashType.plastic,
                           ),
-                          const CheckboxCard(
+                          CheckboxCard(
                             sensorType: SensorType.servo,
                             trashType: TrashType.glass,
                           ),
@@ -88,9 +88,13 @@ class BluetoothView extends StatelessWidget {
                               "Проверка датчиков цвета",
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
+                            const SizedBox(
+                              height: 6,
+                            ),
                             Text(
-                              "Проверка производится автоматически. Начните подносить карточки соответствующих цветов к сенсорам",
+                              "Начните подносить карточки соответствующих цветов к сенсорам",
                               style: Theme.of(context).textTheme.caption,
+                              textAlign: TextAlign.center,
                             ),
                           ],
                           const SizedBox(
@@ -120,8 +124,11 @@ class BluetoothView extends StatelessWidget {
                               "Проверка датчиков расстояния",
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
+                            const SizedBox(
+                              height: 6,
+                            ),
                             Text(
-                              "Проверка производится автоматически. Прислоните руку к сенсору",
+                              "Поднесите предмет к сенсору",
                               style: Theme.of(context).textTheme.caption,
                             ),
                           ],

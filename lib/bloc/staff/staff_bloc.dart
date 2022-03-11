@@ -117,6 +117,7 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
           emit(
             state.copyWith(
               formStatus: SubmissionSuccess(),
+              trashReport: const TrashReport(),
             ),
           );
         } on FirebaseException catch (e) {
