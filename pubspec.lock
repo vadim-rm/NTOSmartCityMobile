@@ -363,6 +363,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  flutter_reactive_ble:
+    dependency: "direct main"
+    description:
+      name: flutter_reactive_ble
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -380,6 +387,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  functional_data:
+    dependency: transitive
+    description:
+      name: functional_data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   glob:
     dependency: transitive
     description:
@@ -653,6 +667,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  quick_blue:
+    dependency: "direct main"
+    description:
+      name: quick_blue
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+2"
+  quick_blue_macos:
+    dependency: transitive
+    description:
+      name: quick_blue_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
+  quick_blue_platform_interface:
+    dependency: transitive
+    description:
+      name: quick_blue_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
+  quick_blue_windows:
+    dependency: transitive
+    description:
+      name: quick_blue_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+1"
+  reactive_ble_mobile:
+    dependency: transitive
+    description:
+      name: reactive_ble_mobile
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
+  reactive_ble_platform_interface:
+    dependency: transitive
+    description:
+      name: reactive_ble_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   rxdart:
     dependency: transitive
     description:

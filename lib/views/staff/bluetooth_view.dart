@@ -15,6 +15,7 @@ import 'package:nagib_pay/widgets/rounded_button.dart';
 class BluetoothView extends StatelessWidget {
   final bool isEditable;
   final TrashReport? trashReport;
+
   const BluetoothView({
     this.isEditable = true,
     this.trashReport,
@@ -83,11 +84,13 @@ class BluetoothView extends StatelessWidget {
                       Column(
                         children: [
                           if (isEditable) ...[
-                            RoundedButton(
-                              onPressed: () {
-                                context.read<StaffBloc>().add(CheckServo());
-                              },
-                              text: "Проверить датчики цвета",
+                            Text(
+                              "Проверка датчиков цвета",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(
+                              "Проверка производится автоматически. Начните подносить карточки соответствующих цветов к сенсорам",
+                              style: Theme.of(context).textTheme.caption,
                             ),
                           ],
                           const SizedBox(
@@ -113,11 +116,13 @@ class BluetoothView extends StatelessWidget {
                       Column(
                         children: [
                           if (isEditable) ...[
-                            RoundedButton(
-                              onPressed: () {
-                                context.read<StaffBloc>().add(CheckServo());
-                              },
-                              text: "Проверить датчик расстояния",
+                            Text(
+                              "Проверка датчиков расстояния",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            Text(
+                              "Проверка производится автоматически. Прислоните руку к сенсору",
+                              style: Theme.of(context).textTheme.caption,
                             ),
                           ],
                           const SizedBox(
@@ -147,8 +152,9 @@ class BluetoothView extends StatelessWidget {
                                 text: "Отправляем отчет",
                               )
                             : RoundedButton(
-                                onPressed: () =>
-                                    context.read<StaffBloc>().add(FormSubmitted()),
+                                onPressed: () => context
+                                    .read<StaffBloc>()
+                                    .add(FormSubmitted()),
                                 text: "Отправить отчет",
                               ),
                       ],

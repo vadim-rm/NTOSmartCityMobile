@@ -49,6 +49,8 @@ dependencies:
   cached_network_image: ^3.2.0
   intl: ^0.17.0
   flutter_blue: ^0.8.0
+  quick_blue: ^0.3.1+2
+  flutter_reactive_ble: ^5.0.2
 
 dev_dependencies:
   flutter_test:

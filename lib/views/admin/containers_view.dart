@@ -81,7 +81,7 @@ class ContainersView extends StatelessWidget {
                                     type: "trash",
                                     date: report.date!,
                                     amount: 1,
-                                    userId: "1",
+                                    userId: "new",
                                   ),
                                 ),
                                 onTap: () => Navigator.push(
