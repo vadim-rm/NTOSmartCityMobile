@@ -1,75 +1,42 @@
-import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:nagib_pay/models/history_action.dart';
+import 'package:nagib_pay/extensions/bluetooth_constants.dart';
 import 'package:nagib_pay/models/trash_report.dart';
-import 'package:nagib_pay/types/sensors_types.dart';
-import 'package:nagib_pay/types/trash_types.dart';
-
-String uuid = "0000ffe0-0000-1000-8000-00805f9b34fb";
-String writeUuid = "0000ffe1-0000-1000-8000-00805f9b34fb";
+import 'package:quick_blue/quick_blue.dart';
 
 class StaffRepository {
-  Future<bool> connectBluetooth() async {
-    bool isConnected = false;
-    await FlutterBlue.instance.stopScan();
-    await FlutterBlue.instance.startScan(timeout: const Duration(seconds: 2));
+  String? arduinoId;
+  Future<void> connectBluetooth(
+    void Function(String, String, Uint8List)? onCharacteristicChange,
+    void Function(String deviceId, BlueConnectionState state)
+        onConnectionChange,
+  ) async {
+    // flutterReactiveBle.scanForDevices(withServices: [], scanMode: ScanMode.balanced).listen((device) {
+    //   //code for handling results
+    //   if (device.id == arduinoUUID) {
+    //
+    //   }
+    // }, onError: () {
+    //   //code for handling error
+    // });
 
-    var subscription = await FlutterBlue.instance.scanResults.listen(
-      (results) async {
-        for (ScanResult r in results) {
-          // TODO: Change MAC Address
-          print(r.device.name.toString()); // MacBook Pro — Даник
-          if (r.device.name == "MacBook Pro — Даник") {
-            print("C");
-            await r.device.connect();
-            List<BluetoothService> services = await r.device.discoverServices();
-            services.forEach((service) async {
-              var characteristics = service.characteristics;
-              for (BluetoothCharacteristic c in characteristics) {
-                List<int> value = await c.read();
-                print(value);
-              }
-            });
-            isConnected = true;
-            break;
-          }
-        }
-      },
-    );
-    print('kek');
-    subscription.cancel();
-    return isConnected;
+
+    QuickBlue.startScan();
+    BlueScanResult arduino = await QuickBlue.scanResultStream
+        .firstWhere((res) => res.deviceId == arduinoUUID);
+    QuickBlue.stopScan();
+    QuickBlue.connect(arduino.deviceId);
+    arduinoId = arduino.deviceId;
+    QuickBlue.discoverServices(arduinoId!);
+    QuickBlue.setValueHandler(onCharacteristicChange);
+    QuickBlue.setConnectionHandler(onConnectionChange);
   }
-
   Future<void> checkServo() async {
-    List<BluetoothDevice> devices = await FlutterBlue.instance.connectedDevices;
-    BluetoothDevice arduino =
-        devices.firstWhere((device) => device.id.toString() == "");
-
-    BluetoothCharacteristic? targetCharacteristic;
-
-    var services = await arduino.discoverServices();
-    services.forEach(
-      (service) {
-        if (service.uuid.toString() == uuid) {
-          service.characteristics.forEach((characteristic) {
-            if (characteristic.uuid.toString() == writeUuid) {
-              targetCharacteristic = characteristic;
-
-              print("Ready ${arduino.name}");
-            }
-          });
-        }
-      },
-    );
-
-    if (targetCharacteristic == null) return;
-
-    List<int> bytes = utf8.encode("s"); // s = servo
-
-    await targetCharacteristic!.write(bytes, withoutResponse: false);
+    print("ARDUINO ID");
+    print(arduinoId);
+    await QuickBlue.writeValue(arduinoId!, serviceUUID, characteristicUUID,
+        Uint8List.fromList('s'.codeUnits), BleOutputProperty.withoutResponse);
   }
 
   Future<void> sendReport(TrashReport trashReport) async {

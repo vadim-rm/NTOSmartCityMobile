@@ -38,6 +38,12 @@ class HistoryItem extends StatelessWidget {
                         style: Theme.of(context).textTheme.caption,
                         textAlign: TextAlign.left,
                       ),
+                    ] else if (action.type == "trash" && action.userId != "new") ...[
+                      Text(
+                        "ID контейнера: ${action.userId}",
+                        style: Theme.of(context).textTheme.caption,
+                        textAlign: TextAlign.left,
+                      ),
                     ],
                     Text(
                       action.actionDescription,

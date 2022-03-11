@@ -18,3 +18,11 @@ class ChangedCheckbox extends StaffEvent {
 }
 
 class FormSubmitted extends StaffEvent {}
+
+class UpdateStatus extends StaffEvent {
+  final Map<SensorType, Map<TrashType, bool>> newStatus;
+
+  UpdateStatus({
+    required this.newStatus,
+  });
+}

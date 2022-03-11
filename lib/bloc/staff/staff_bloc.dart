@@ -1,41 +1,81 @@
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nagib_pay/bloc/failure.dart';
 import 'package:nagib_pay/bloc/from_submission_status.dart';
 import 'package:nagib_pay/bloc/staff/staff_event.dart';
 import 'package:nagib_pay/bloc/staff/staff_state.dart';
+import 'package:nagib_pay/extensions/bluetooth_constants.dart';
 import 'package:nagib_pay/models/trash_report.dart';
 import 'package:nagib_pay/repository/staff_repository.dart';
 import 'package:nagib_pay/types/sensors_types.dart';
 import 'package:nagib_pay/types/trash_types.dart';
+import 'package:quick_blue/quick_blue.dart';
 
 class StaffBloc extends Bloc<StaffEvent, StaffState> {
   final StaffRepository staffRepository;
   final TrashReport? trashReport;
   final bool isEditable;
+
   StaffBloc({
     required this.staffRepository,
     this.trashReport,
     this.isEditable = false,
-  }) : super(StaffState(
+  }) : super(
+          StaffState(
             trashReport: trashReport ?? const TrashReport(),
-            isEditable: isEditable)) {
+            isEditable: isEditable,
+          ),
+        ) {
+    void onConnectionChanged(String deviceId, BlueConnectionState state) {
+      print('_handleConnectionChange $deviceId, ${state.value}');
+    }
+
+    void onCharacteristicsChange(
+        String deviceId, String characteristicId, Uint8List value) {
+      print('_handleValueChange $deviceId, $characteristicId, $value');
+      print(String.fromCharCodes(value));
+      if (characteristicId == characteristicUUID) {
+        String data = String.fromCharCodes(value);
+
+        Map<SensorType, Map<TrashType, bool>> newStatus =
+            Map.of(state.trashReport.status);
+
+        switch (data) {
+          // a(color), 1(dist) - glass
+          // b(color), 2(dist) - plastic
+          // c(color), 3(dist) - paper
+          case "1":
+            newStatus[SensorType.distance]![TrashType.glass] = true;
+            break;
+          case "2":
+            newStatus[SensorType.distance]![TrashType.plastic] = true;
+            break;
+          case "3":
+            newStatus[SensorType.distance]![TrashType.paper] = true;
+            break;
+          case "a":
+            newStatus[SensorType.color]![TrashType.glass] = true;
+            break;
+          case "b":
+            newStatus[SensorType.color]![TrashType.glass] = true;
+            break;
+          case "c":
+            newStatus[SensorType.color]![TrashType.glass] = true;
+            break;
+        }
+        add(UpdateStatus(newStatus: newStatus));
+      }
+    }
+
     on<ConnectBluetooth>(
       (event, emit) async {
-        bool isConnected = await staffRepository.connectBluetooth();
-        print("IS CONNECTED" + isConnected.toString());
+        await staffRepository.connectBluetooth(
+            onCharacteristicsChange, onConnectionChanged);
         emit(state.copyWith(
-          isConnected: isConnected,
+          isConnected: true,
         ));
-        // List<User?> users = await staffRepository.getUsers();
-        //
-        // emit(
-        //   state.copyWith(
-        //     allUsers: users,
-        //     filteredUsers: users,
-        //     loaded: true,
-        //   ),
-        // );
       },
     );
 
@@ -62,18 +102,6 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
             ),
           ),
         );
-        // Map<SensorType, Map<TrashType, bool>> newSensorsStatus = {
-        //   ...state.sensorsStatus
-        // };
-        // newSensorsStatus[event.sensorType] =
-        //     Map.of(state.sensorsStatus[event.sensorType]!);
-
-        // newSensorsStatus[event.sensorType]![event.trashType] =
-        //     !newSensorsStatus[event.sensorType]![event.trashType]!;
-        // emit(state.copyWith(
-        //   sensorsStatus: newSensorsStatus,
-        // );
-        // );
       },
     );
 
@@ -102,5 +130,13 @@ class StaffBloc extends Bloc<StaffEvent, StaffState> {
         }
       },
     );
+
+    on<UpdateStatus>((event, emit) {
+      emit(
+        state.copyWith(
+          trashReport: state.trashReport.copyWith(status: event.newStatus),
+        ),
+      );
+    });
   }
 }
