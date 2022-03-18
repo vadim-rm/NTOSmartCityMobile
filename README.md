@@ -1,10 +1,7 @@
 # NTOSmartCity Web Repository
-This repository contains the code for the Flutter App of the Nagibyte team solution on the National Technology Olympiad
+This repository contains the code for the Flutter App of the Nagibators (AKA На чиле) team solution on the National Technology Olympiad
 A code for the Arduino part available in [NTOSmartCityArduino](https://github.com/vadim-rm/NTOSmartCityArduino) repository
 
-This solution was created by our team (a union of the teams "Nagibators" and "Ebyte"):
-  * [Vadim Mazhitov](https://github.com/vadim-rm) (Nagibators, Flutter & Arduino Expert)
-  * [Daniil Kikimov](https://github.com/katsushooter) (Nagibators, Flutter Expert)
-  * [Alexander Petrov](https://github.com/Leto-Osen228) (Ebyte, Arduino & Schematics Expert)
-  * [Nikita Syshchikov](https://github.com/furperson) (Ebyte, Arduino & Schematics Expert)
-  * [Andrey Karabanov](https://github.com/forafox) (Ebyte, Arduino & Schematics Expert)
+This solution was created by our team:
+  * [Vadim Mazhitov](https://github.com/vadim-rm) (Flutter & Arduino Expert)
+  * [Daniil Kikimov](https://github.com/katsushooter) (Flutter Expert)
